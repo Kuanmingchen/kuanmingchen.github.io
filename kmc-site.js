@@ -466,7 +466,7 @@
     var cards = D.featured.slice(0, 3).map(function (f) {
       return '<a href="#/featured" data-nav style="display:block; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,.05);">'
         + (f.img
-            ? '<div style="height:88px; overflow:hidden; background:' + f.color + '0c;"><img src="' + esc(f.img) + '" alt="" style="width:100%; height:100%; object-fit:cover; display:block;"></div>'
+            ? '<div style="height:88px; overflow:hidden; background:' + f.color + '0c; display:flex; align-items:center; justify-content:center; padding:6px;"><img src="' + esc(f.img) + '" alt="" style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; display:block;"></div>'
             : '<div style="height:70px; background-image:repeating-linear-gradient(135deg,' + f.color + '14 0 10px,' + f.color + '08 10px 20px); display:flex; align-items:flex-end; padding:8px 12px;"><span style="font-family:' + MONO + '; font-size:10px; color:' + f.color + '; opacity:.7;">' + esc(L(f, "fig", lang)) + '</span></div>')
         + '<div style="padding:20px 22px;"><span style="font-family:' + GR + '; font-size:10px; letter-spacing:.04em; text-transform:uppercase; color:' + f.color + '; background:' + f.color + '1c; padding:3px 9px; border-radius:20px;">' + esc(L(f, "topic", lang)) + '</span>'
         + '<div style="font-family:' + GR + '; font-size:42px; font-weight:700; color:' + f.color + '; letter-spacing:-.02em; line-height:1; margin:14px 0 8px;">' + f.num + '</div>'
@@ -581,7 +581,7 @@
     var p = paper(f.pid) || {};
     return '<div style="display:grid; grid-template-columns:420px 1fr; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,.06);">'
       + (f.img
-          ? '<div style="background:' + f.color + '0c; min-height:320px; overflow:hidden;"><img src="' + esc(f.img) + '" alt="" style="width:100%; height:100%; object-fit:cover; display:block;"></div>'
+          ? '<div style="background:' + f.color + '0c; min-height:320px; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:22px;"><img src="' + esc(f.img) + '" alt="" style="max-width:100%; max-height:280px; width:auto; height:auto; object-fit:contain; display:block;"></div>'
           : '<div style="background-image:repeating-linear-gradient(135deg,' + f.color + '14 0 11px,' + f.color + '09 11px 22px); display:flex; align-items:flex-end; justify-content:space-between; padding:14px; min-height:320px;"><span style="font-family:' + MONO + '; font-size:11px; color:' + f.color + '; opacity:.7;">' + (lang === "zh" ? "\u95DC\u9375\u5716 \u2014 " : "key figure \u2014 ") + esc(L(f, "fig", lang)) + '</span><span style="font-family:' + MONO + '; font-size:11px; color:' + f.color + '; opacity:.7;">fig. 1</span></div>')
       + '<div style="padding:34px 38px; display:flex; flex-direction:column; justify-content:center;">'
       + '<span style="font-family:' + GR + '; font-size:10px; letter-spacing:.04em; text-transform:uppercase; color:' + f.color + '; background:' + f.color + '1c; padding:4px 10px; border-radius:20px; align-self:flex-start;">' + esc(L(f, "topic", lang)) + '</span>'
