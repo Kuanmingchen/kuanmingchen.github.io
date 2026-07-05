@@ -119,7 +119,11 @@
       cv_url: "https://drive.google.com/file/d/1GTHTW3U1bK2jiWnSAzHgC3q-KiL3jVZu/view",
       dept_url: "https://econ.ntu.edu.tw/",
       center_url: "https://bdsrc.ntu.edu.tw/",
-      photo: "assets/headshot.jpg"
+      photo: "assets/headshot.jpg",
+      nav_teaching: "false",
+      cv_page: "false",
+      student_details: "false",
+      nav_personal: "false"
     },
 
     papers: [
@@ -146,7 +150,10 @@
         t_zh: "\u8C93\u3001\u72D7\u8207\u5BF6\u5BF6\uFF1A\u66FF\u4EE3\u6216\u4E92\u88DC\u7684\u6E96\u5BE6\u9A57\u8B49\u64DA",
         out_en: "Working paper", out_zh: "\u5DE5\u4F5C\u8AD6\u6587",
         ins: ["household"], top: ["fertility", "family"], pos: { household: "family" },
-        co: ["Ming-Jen Lin", "Hau-Hung Yang", "Yu-hsuan Shirley Yen"], stu: ["lo"], ssrn: "5656231",
+        co: ["Ming-Jen Lin", "Hau-Hung Yang", "Yu-hsuan Shirley Yen"], stu: ["lo"], ssrn: "5656231", arxiv: "2508.00000",
+        co_links: [["Ming-Jen Lin", "https://sites.google.com/site/mingjenlin/"]],
+        ab_en: "Are pets substitutes or complements for children? We link Taiwan's national pet-registration records to individual tax data covering 23 million people and exploit the timing of births and pet adoptions. Dog adoption rises 21% in the year after a birth, and adopting a dog raises the probability of a subsequent birth by 33%. The patterns are inconsistent with pets substituting for children and instead point to shared complementarities in the household's demand for caregiving.",
+        ab_zh: "\u5BF5\u7269\u662F\u5B69\u5B50\u7684\u66FF\u4EE3\u54C1\u9084\u662F\u4E92\u88DC\u54C1\uFF1F\u6211\u5011\u4E32\u63A5\u81FA\u7063\u5168\u570B\u5BF5\u7269\u767B\u8A18\u8207\u500B\u4EBA\u7A05\u7C4D\u8CC7\u6599\uFF08\u6DB5\u84CB 2300 \u842C\u4EBA\uFF09\uFF0C\u5229\u7528\u751F\u80B2\u8207\u990A\u5BF5\u7269\u7684\u6642\u9593\u5DEE\u7570\u3002\u751F\u80B2\u5F8C\u4E00\u5E74\u990A\u72D7\u6BD4\u4F8B\u4E0A\u5347 21%\uFF0C\u990A\u72D7\u4F7F\u65E5\u5F8C\u751F\u80B2\u6A5F\u7387\u63D0\u9AD8 33%\uFF0C\u8207\u66FF\u4EE3\u95DC\u4FC2\u4E0D\u7B26\uFF0C\u800C\u6307\u5411\u5BB6\u5EAD\u7167\u8B77\u9700\u6C42\u7684\u4E92\u88DC\u6027\u3002",
         s_en: "Linking Taiwan's pet registry to tax records (23M people), dog adoption rises 21% after a birth, and adopting a dog raises the chance of later childbearing by 33% \u2014 pets and children are complements.",
         s_zh: "\u4E32\u63A5\u81FA\u7063\u5BF5\u7269\u767B\u8A18\u8207\u7A05\u7C4D\u8CC7\u6599\uFF082300 \u842C\u4EBA\uFF09\uFF0C\u751F\u80B2\u5F8C\u990A\u72D7\u6BD4\u4F8B\u4E0A\u5347 21%\uFF0C\u800C\u990A\u72D7\u4F7F\u65E5\u5F8C\u751F\u80B2\u6A5F\u7387\u63D0\u9AD8 33%\u2014\u2014\u5BF5\u7269\u8207\u5B69\u5B50\u662F\u4E92\u88DC\u800C\u975E\u66FF\u4EE3\u3002" },
 
@@ -364,6 +371,7 @@
   function firstStage(inst) { var a = INST_STAGES[inst] || []; return a.length ? a[0].key : null; }
   function papersAt(inst, stage, filter) {
     return D.papers.filter(function (p) {
+      if (!shown(p)) return false;
       if (!p.pos || p.pos[inst] !== stage) return false;
       if (filter && filter !== "all" && p.st !== filter) return false;
       return true;
@@ -373,10 +381,22 @@
   function chip(txt, bg, col, bord) {
     return '<span style="font-family:' + GR + '; font-size:11px; padding:3px 9px; border-radius:20px; background:' + bg + '; color:' + col + '; border:1px solid ' + (bord || "transparent") + ';">' + txt + '</span>';
   }
+  function truthy(v) { return v === true || v === 1 || (typeof v === "string" && (v.toLowerCase() === "true" || v === "1" || v.toLowerCase() === "yes")); }
+  function shown(p) { return !(p && (p.show === false || (typeof p.show === "string" && (p.show.toLowerCase() === "false" || p.show === "0" || p.show.toLowerCase() === "no" || p.show.toLowerCase() === "off")))); }
+  function coauthorsHTML(p, lang) {
+    if (!p.co || !p.co.length) return "";
+    var linkMap = {};
+    (p.co_links || []).forEach(function (pair) { if (pair && pair[0]) linkMap[pair[0].trim()] = pair[1] || ""; });
+    return p.co.map(function (name) {
+      var url = linkMap[name.trim()];
+      return url ? '<a href="' + esc(url) + '" target="_blank" style="color:' + GREEN + '; text-decoration:underline; text-underline-offset:2px;">' + esc(name) + '</a>' : esc(name);
+    }).join(", ");
+  }
   function links(p, lang) {
     var out = [];
     if (p.doi) out.push('<a href="' + p.doi + '" target="_blank" style="color:' + GREEN + ';">' + (lang === "zh" ? "\u671F\u520A" : "Journal") + ' \u2197</a>');
     if (p.nber) out.push('<a href="https://www.nber.org/papers/w' + p.nber + '" target="_blank" style="color:' + GREEN + ';">NBER \u2197</a>');
+    if (p.arxiv) out.push('<a href="https://arxiv.org/abs/' + p.arxiv + '" target="_blank" style="color:' + GREEN + ';">arXiv \u2197</a>');
     if (p.ssrn) out.push('<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=' + p.ssrn + '" target="_blank" style="color:' + GREEN + ';">SSRN \u2197</a>');
     if (p.media && p.media.length) out.push('<span style="color:' + MUTE + ';">' + (lang === "zh" ? "\u5A92\u9AD4\uFF1A" : "Media: ") + p.media.map(function (m) { return '<a href="' + m[1] + '" target="_blank" style="color:' + MUTE + '; text-decoration:underline;">' + m[0] + '</a>'; }).join(" \u00B7 ") + '</span>');
     return out;
@@ -385,10 +405,14 @@
   /* ====================  NAV + FOOTER  ==================== */
   function navHTML(route, lang) {
     var s = D.settings;
-    var items = [["home", "#/"], ["research", "#/research"], ["students", "#/students"], ["teaching", "#/teaching"], ["cv", "#/cv"], ["personal", "#/personal"]];
+    var items = [["home", "#/"], ["research", "#/research"], ["students", "#/students"]];
+    if (truthy(s.nav_teaching)) items.push(["teaching", "#/teaching"]);
+    items.push(truthy(s.cv_page) ? ["cv", "#/cv"] : ["cv", s.cv_url || "#/cv", true]);
+    if (truthy(s.nav_personal)) items.push(["personal", "#/personal"]);
     var navItems = items.map(function (it) {
-      var on = (route === it[0]) || (route === "home" && it[0] === "home");
-      return '<a href="' + it[1] + '" data-nav style="font-family:' + GR + '; font-size:13.5px; color:' + (on ? "#F3F1EC" : "#bfc0b6") + '; border-bottom:1.5px solid ' + (on ? "#F3F1EC" : "transparent") + '; padding-bottom:3px; transition:color .15s;">' + ui("nav", it[0], lang) + '</a>';
+      var external = it[2];
+      var on = !external && ((route === it[0]) || (route === "home" && it[0] === "home"));
+      return '<a href="' + it[1] + '"' + (external ? ' target="_blank"' : ' data-nav') + ' style="font-family:' + GR + '; font-size:13.5px; color:' + (on ? "#F3F1EC" : "#bfc0b6") + '; border-bottom:1.5px solid ' + (on ? "#F3F1EC" : "transparent") + '; padding-bottom:3px; transition:color .15s;">' + ui("nav", it[0], lang) + (external ? ' \u2197' : "") + '</a>';
     }).join("");
     var toggle = '<span style="display:inline-flex; border:1px solid rgba(243,241,236,.3); border-radius:20px; overflow:hidden; font-size:12px; margin-left:6px;">'
       + '<span data-lang="en" style="cursor:pointer; padding:4px 11px; font-family:' + GR + '; ' + (lang === "en" ? "background:#F3F1EC; color:#1E1F1A;" : "color:#bfc0b6;") + '">EN</span>'
@@ -456,7 +480,7 @@
 
     // research areas (institutions \u2192 map)
     var areas = INSTS.map(function (o) {
-      var n = D.papers.filter(function (p) { return p.ins.indexOf(o.key) >= 0; }).length;
+      var n = D.papers.filter(function (p) { return shown(p) && p.ins.indexOf(o.key) >= 0; }).length;
       return '<a href="#/research?inst=' + o.key + '" data-nav style="display:flex; flex-direction:column; gap:10px; background:#fff; border-radius:8px; padding:22px 24px; box-shadow:0 1px 2px rgba(0,0,0,.05); border-top:3px solid ' + o.color + ';">'
         + '<span style="font-family:' + GR + '; font-size:19px; font-weight:600; color:#1E1F1A;">' + esc(o[lang] || o.en) + '</span>'
         + '<span style="font-family:' + MONO + '; font-size:11px; color:' + FAINT + ';">' + n + (lang === "zh" ? " \u7BC7\u7814\u7A76" : " papers") + '</span></a>';
@@ -509,14 +533,15 @@
   function paperDetailHTML(p, inst, stage, lang) {
     var st = STATUS[p.st];
     var insChips = p.ins.map(function (k) { var o = instObj(k); return chip(esc(o[lang] || o.en), "#fff", o.color, o.color); }).join(" ");
-    var co = p.co.length ? ('<div style="font-size:14px; color:' + MUTE + '; font-style:italic; margin-top:6px;">' + (lang === "zh" ? "\u5408\u8457\uFF1A" : "with ") + esc(p.co.join(", ")) + '</div>') : "";
+    var co = p.co.length ? ('<div style="font-size:14px; color:' + MUTE + '; font-style:italic; margin-top:6px;">' + (lang === "zh" ? "\u5408\u8457\uFF1A" : "with ") + coauthorsHTML(p, lang) + '</div>') : "";
+    var abs = L(p, "ab", lang) ? ('<div style="margin-top:18px; background:#fff; border:1px solid rgba(30,31,26,.1); border-radius:8px; padding:18px 20px; max-width:760px;"><div style="font-family:' + MONO + '; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:' + FAINT + '; margin-bottom:8px;">' + (lang === "zh" ? "\u6458\u8981" : "Abstract") + '</div><p style="font-size:14.5px; line-height:1.65; color:#3c3d36; margin:0;">' + esc(L(p, "ab", lang)) + '</p></div>') : "";
     var stu = p.stu.length ? ('<div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:7px; align-items:center;"><span style="font-family:' + MONO + '; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:' + FAINT + ';">' + (lang === "zh" ? "\u5B78\u751F" : "Students") + '</span>' + p.stu.map(function (sid) { var ss = student(sid); return chip(esc((ss ? L(ss, "name", lang) : sid)) + " \u2197", "#f1ede3", INK, "rgba(30,31,26,.15)"); }).join(" ") + '</div>') : "";
     var back = '<div data-back style="cursor:pointer; display:inline-flex; align-items:center; gap:8px; font-family:' + GR + '; font-size:13px; font-weight:600; color:' + GREEN + '; background:#e3efe7; border:1px solid rgba(31,107,74,.35); padding:9px 15px; border-radius:24px; margin-bottom:20px;"><span style="font-size:16px; line-height:1;">\u2190</span> ' + (lang === "zh" ? "\u8FD4\u56DE" : "Back to ") + esc(stageLabel(inst, stage, lang)) + '</div>';
     var summ = L(p, "s", lang) ? '<p style="font-size:16px; line-height:1.6; color:#3c3d36; margin:16px 0 0; max-width:760px;">' + esc(L(p, "s", lang)) + '</p>' : "";
     return back
       + '<div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;"><span style="font-family:' + GR + '; font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:#fff; background:' + st.color + '; padding:4px 10px; border-radius:20px;">' + (st[lang] || st.en) + '</span><span style="font-size:13px; color:' + MUTE + ';">' + esc(L(p, "out", lang)) + '</span></div>'
       + '<div style="font-family:' + GR + '; font-size:23px; font-weight:600; line-height:1.25; color:' + INK + '; max-width:760px;">' + esc(L(p, "t", lang)) + '</div>'
-      + co + summ
+      + co + summ + abs
       + '<div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; align-items:center;"><span style="font-family:' + MONO + '; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:' + FAINT + '; margin-right:2px;">' + (lang === "zh" ? "\u4EA6\u5C6C\u65BC" : "Also in") + '</span>' + insChips + '</div>'
       + stu
       + '<div style="display:flex; gap:16px; margin-top:16px; font-family:' + GR + '; font-size:13px; flex-wrap:wrap;">' + links(p, lang).join('<span style="color:#cfc9bd;">\u00B7</span>') + '</div>';
@@ -562,7 +587,7 @@
       + '<span style="font-family:' + GR + '; font-size:10px; letter-spacing:.04em; text-transform:uppercase; color:' + f.color + '; background:' + f.color + '1c; padding:4px 10px; border-radius:20px; align-self:flex-start;">' + esc(L(f, "topic", lang)) + '</span>'
       + '<div style="display:flex; align-items:baseline; gap:16px; margin:18px 0 8px;"><span style="font-family:' + GR + '; font-size:62px; font-weight:700; line-height:.9; color:' + f.color + '; letter-spacing:-.02em;">' + f.num + '</span><span style="font-size:15.5px; color:' + MUTE + '; line-height:1.35; max-width:250px;">' + esc(L(f, "unit", lang)) + '</span></div>'
       + '<div style="font-family:' + GR + '; font-size:23px; font-weight:600; line-height:1.2; margin-top:4px; color:' + INK + ';">' + esc(L(p, "t", lang)) + '</div>'
-      + (p.co && p.co.length ? '<div style="font-size:14px; color:' + MUTE + '; font-style:italic; margin-top:5px;">' + (lang === "zh" ? "\u5408\u8457\uFF1A" : "with ") + esc(p.co.join(", ")) + ' \u00B7 ' + esc(L(p, "out", lang)) + '</div>' : "")
+      + (p.co && p.co.length ? '<div style="font-size:14px; color:' + MUTE + '; font-style:italic; margin-top:5px;">' + (lang === "zh" ? "\u5408\u8457\uFF1A" : "with ") + coauthorsHTML(p, lang) + ' \u00B7 ' + esc(L(p, "out", lang)) + '</div>' : "")
       + (L(p, "s", lang) ? '<p style="font-size:15.5px; line-height:1.55; color:#3c3d36; margin:14px 0 0;">' + esc(L(p, "s", lang)) + '</p>' : "")
       + '<div style="display:flex; gap:16px; margin-top:18px; font-family:' + GR + '; font-size:13px; flex-wrap:wrap;">' + links(p, lang).join('<span style="color:#cfc9bd;">\u00B7</span>') + '</div>'
       + '</div></div>';
@@ -595,6 +620,7 @@
     var facets = { status: [], topic: [], inst: [] };
     Object.keys(Lb).forEach(function (k) { if (Lb[k]) { var sp = k.split(":"); if (facets[sp[0]]) facets[sp[0]].push(sp[1]); } });
     return D.papers.filter(function (p) {
+      if (!shown(p)) return false;
       if (q) { var hay = (p.t_en + " " + p.t_zh + " " + p.co.join(" ") + " " + p.out_en).toLowerCase(); if (hay.indexOf(q) === -1) return false; }
       if (facets.status.length && facets.status.indexOf(p.st) === -1) return false;
       if (facets.topic.length && !facets.topic.some(function (t) { return p.top.indexOf(t) >= 0; })) return false;
@@ -609,7 +635,7 @@
     return list.map(function (p) {
       var st = STATUS[p.st];
       var tags = p.top.map(function (t) { return chip(esc(TOPICS[t] ? (TOPICS[t][lang] || TOPICS[t].en) : t), PANEL, MUTE); }).join(" ");
-      var co = p.co.length ? '<span style="font-style:italic;"> \u2014 ' + (lang === "zh" ? "\u5408\u8457\uFF1A" : "with ") + esc(p.co.join(", ")) + '</span>' : "";
+      var co = p.co.length ? '<span style="font-style:italic;"> \u00B7 ' + (lang === "zh" ? "\u5408\u8457\uFF1A" : "with ") + coauthorsHTML(p, lang) + '</span>' : "";
       return '<div style="display:grid; grid-template-columns:1fr auto; gap:18px; padding:16px 0; border-bottom:1px solid rgba(30,31,26,.1); align-items:start;">'
         + '<div><div style="font-family:' + GR + '; font-size:17px; font-weight:600; line-height:1.3; color:' + INK + ';">' + esc(L(p, "t", lang)) + '</div>'
         + '<div style="font-size:13.5px; color:' + MUTE + '; margin-top:3px;">' + esc(L(p, "out", lang)) + co + '</div>'
@@ -651,10 +677,11 @@
   function roleColor(r) { if (r.indexOf("PhD") >= 0) return "#1F6B4A"; if (r.indexOf("Master") >= 0) return "#5E9B7A"; if (r.indexOf("Undergrad") >= 0) return "#9CC2A8"; if (r.indexOf("RA") >= 0) return "#C4BBA6"; return "#B0A88F"; }
   function studentsBodyHTML(s) {
     var lang = s.lang, open = s.sOpen;
-    var sorted = D.students.slice().sort(function (a, b) { return b.year - a.year; });
+    var details = truthy(D.settings.student_details);
+    var sorted = D.students.slice().filter(shown).reverse();
     return sorted.map(function (st) {
-      var isOpen = open === st.id, rc = roleColor(st.role);
-      var theirPapers = D.papers.filter(function (p) { return p.stu.indexOf(st.id) >= 0; });
+      var isOpen = details && open === st.id, rc = roleColor(st.role);
+      var theirPapers = D.papers.filter(function (p) { return shown(p) && p.stu.indexOf(st.id) >= 0; });
       var traj = LA(st, "traj", lang).map(function (step, i) { return (i ? '<span style="color:#c4bba6; margin:0 2px;">\u2192</span>' : "") + '<span style="font-family:' + GR + '; font-size:12.5px; color:#3c3d36; background:#f1ede3; padding:4px 10px; border-radius:20px;">' + esc(step) + '</span>'; }).join("");
       var papersHtml = theirPapers.length ? theirPapers.map(function (p) {
         var s2 = STATUS[p.st];
@@ -665,24 +692,28 @@
         + '<div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center; margin-bottom:16px;">' + traj + '</div>'
         + '<div style="font-family:' + MONO + '; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:' + FAINT + ';">' + (lang === "zh" ? "\u5408\u4F5C\u7814\u7A76" : "Worked with me on") + '</div>' + papersHtml
         + (st.site ? '<div style="margin-top:12px; font-family:' + GR + '; font-size:13px; color:' + GREEN + ';">' + (lang === "zh" ? "\u500B\u4EBA\u7DB2\u7AD9 \u2197" : "personal site \u2197") + '</div>' : "") + '</div>') : "";
-      return '<div data-student-card="' + st.id + '" style="cursor:pointer; background:#fff; border-radius:7px; padding:18px 20px; box-shadow:0 1px 2px rgba(0,0,0,.05); border:1px solid ' + (isOpen ? "rgba(31,107,74,.3)" : "transparent") + '; align-self:start;">'
+      return '<div ' + (details ? 'data-student-card="' + st.id + '" style="cursor:pointer; ' : 'style="') + 'background:#fff; border-radius:7px; padding:18px 20px; box-shadow:0 1px 2px rgba(0,0,0,.05); border:1px solid ' + (isOpen ? "rgba(31,107,74,.3)" : "transparent") + '; align-self:start;">'
         + '<div style="display:flex; justify-content:space-between; align-items:start; gap:12px;">'
         + '<div><div style="font-family:' + GR + '; font-size:18px; font-weight:600; color:' + INK + ';">' + esc(L(st, "name", lang)) + '</div>'
         + '<div style="font-size:13px; color:' + MUTE + '; margin-top:3px; display:flex; align-items:center; gap:7px;"><span style="width:8px; height:8px; border-radius:50%; background:' + rc + ';"></span>' + esc(st.role) + ' \u00B7 ' + (lang === "zh" ? "\u81EA " : "since ") + st.year + '</div></div>'
-        + '<span style="font-family:' + GR + '; font-size:18px; color:#c4bba6; transform:rotate(' + (isOpen ? "45" : "0") + 'deg);">+</span></div>'
+        + (details ? '<span style="font-family:' + GR + '; font-size:18px; color:#c4bba6; transform:rotate(' + (isOpen ? "45" : "0") + 'deg);">+</span>' : "") + '</div>'
         + '<div style="font-size:14.5px; color:#3c3d36; margin-top:10px;">\u2192 ' + esc(L(st, "place", lang)) + '</div>'
-        + '<div style="font-family:' + MONO + '; font-size:10.5px; color:#b0a88f; margin-top:8px;">' + theirPapers.length + (lang === "zh" ? " \u7BC7\u5408\u4F5C" : (" project" + (theirPapers.length === 1 ? "" : "s") + " with me")) + (isOpen ? "" : (lang === "zh" ? " \u00B7 \u9EDE\u64CA\u5C55\u958B" : " \u00B7 click to expand")) + '</div>'
+        + '<div style="font-family:' + MONO + '; font-size:10.5px; color:#b0a88f; margin-top:8px;">' + theirPapers.length + (lang === "zh" ? " \u7BC7\u5408\u4F5C" : (" project" + (theirPapers.length === 1 ? "" : "s") + " with me")) + (details && !isOpen ? (lang === "zh" ? " \u00B7 \u9EDE\u64CA\u5C55\u958B" : " \u00B7 click to expand") : "") + '</div>'
         + body + '</div>';
     }).join("");
   }
   function studentsHTML(s) {
     var lang = s.lang;
+    var details = truthy(D.settings.student_details);
+    var intro = details
+      ? (lang === "zh" ? "\u6211\u6307\u5C0E\u6216\u64D4\u4EFB\u7814\u7A76\u52A9\u7406\u7684\u5B78\u751F\u53CA\u4ED6\u5011\u7684\u7B2C\u4E00\u4EFD\u5DE5\u4F5C\u3002" : "Students I've advised, supervised, or mentored as RAs, and where their first placement is. <strong>Click anyone</strong> to see the projects we worked on and their path since.")
+      : (lang === "zh" ? "\u6211\u6307\u5C0E\u6216\u64D4\u4EFB\u7814\u7A76\u52A9\u7406\u7684\u5B78\u751F\u53CA\u4ED6\u5011\u7684\u7B2C\u4E00\u4EFD\u5DE5\u4F5C\u3002" : "Students I've advised, supervised, or mentored as RAs, and where their first placement is.");
     var legend = [["PhD", "#1F6B4A"], ["Masters", "#5E9B7A"], ["Undergrad", "#9CC2A8"], ["RA", "#C4BBA6"]].map(function (x) {
       return '<span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:8px; height:8px; border-radius:50%; background:' + x[1] + ';"></span>' + x[0] + '</span>';
     }).join("");
     return navspacer()
       + '<div style="padding:48px var(--px) 22px;"><h1 style="font-family:' + GR + '; font-size:46px; font-weight:600; letter-spacing:-.02em; margin:0 0 12px;">' + (lang === "zh" ? "\u5B78\u751F" : "Students") + '</h1>'
-      + '<p style="font-size:18px; line-height:1.6; color:#3c3d36; max-width:640px; margin:0 0 18px;">' + (lang === "zh" ? "\u6211\u6307\u5C0E\u3001\u76E3\u7763\u6216\u62C5\u4EFB\u7814\u7A76\u52A9\u7406\u7684\u5B78\u751F\uFF0C\u4EE5\u53CA\u4ED6\u5011\u73FE\u5728\u7684\u53BB\u8655\u3002<strong>\u9EDE\u9078</strong>\u53EF\u770B\u5408\u4F5C\u7684\u8A08\u756B\u8207\u8077\u6DAF\u6B77\u7A0B\u3002" : "Students I've advised, supervised, or mentored as RAs, and where they are now. <strong>Click anyone</strong> to see the projects we worked on and their path since.") + ' <span style="color:' + FAINT + '; font-style:italic;">(' + (lang === "zh" ? "\u793A\u4F8B\u540D\u55AE\u2014\u8ACB\u65BC\u8A66\u7B97\u8868\u66F4\u65B0" : "Sample roster \u2014 edit in the Students tab") + ')</span></p>'
+      + '<p style="font-size:18px; line-height:1.6; color:#3c3d36; max-width:640px; margin:0 0 18px;">' + intro + '</p>'
       + '<div style="display:flex; gap:16px; font-family:' + GR + '; font-size:12px; color:' + MUTE + '; align-items:center; flex-wrap:wrap;">' + legend + '</div></div>'
       + '<div data-students style="padding:6px var(--px) 40px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; align-items:start;">' + studentsBodyHTML(s) + '</div>';
   }
@@ -707,13 +738,13 @@
   /* ====================  CV  ==================== */
   function cvHTML(s) {
     var lang = s.lang, sgs = D.settings;
-    var pubs = D.papers.filter(function (p) { return p.st === "published" || p.st === "forthcoming"; })
+    var pubs = D.papers.filter(function (p) { return shown(p) && (p.st === "published" || p.st === "forthcoming"); })
       .sort(function (a, b) { return (b.year || 0) - (a.year || 0); });
     var pubRows = pubs.map(function (p) {
       return '<div style="display:grid; grid-template-columns:64px 1fr; gap:18px; padding:14px 0; border-top:1px solid rgba(30,31,26,.1);">'
         + '<div style="font-family:' + MONO + '; font-size:13px; color:' + FAINT + ';">' + (p.year || "") + '</div>'
         + '<div><div style="font-family:' + GR + '; font-size:16px; font-weight:600; color:' + INK + '; line-height:1.35;">' + esc(L(p, "t", lang)) + '</div>'
-        + '<div style="font-size:13.5px; color:' + MUTE + '; margin-top:3px;">' + (p.co.length ? (lang === "zh" ? "\u5408\u8457\uFF1A" : "with ") + esc(p.co.join(", ")) + ' \u00B7 ' : "") + '<span style="font-style:italic;">' + esc(L(p, "out", lang)) + '</span></div></div></div>';
+        + '<div style="font-size:13.5px; color:' + MUTE + '; margin-top:3px;">' + (p.co.length ? (lang === "zh" ? "\u5408\u8457\uFF1A" : "with ") + coauthorsHTML(p, lang) + ' \u00B7 ' : "") + '<span style="font-style:italic;">' + esc(L(p, "out", lang)) + '</span></div></div></div>';
     }).join("");
 
     var sections = D.cv.sections.map(function (sec) {
@@ -770,9 +801,9 @@
       case "featured": return featuredHTML(s);
       case "browse":   return browseHTML(s);
       case "students": return studentsHTML(s);
-      case "teaching": return teachingHTML(s);
-      case "cv":       return cvHTML(s);
-      case "personal": return personalHTML(s);
+      case "teaching": return truthy(D.settings.nav_teaching) ? teachingHTML(s) : homeHTML(s.lang);
+      case "cv":       return truthy(D.settings.cv_page) ? cvHTML(s) : homeHTML(s.lang);
+      case "personal": return truthy(D.settings.nav_personal) ? personalHTML(s) : homeHTML(s.lang);
       default:          return homeHTML(s.lang);
     }
   }
@@ -819,9 +850,11 @@
             t_en: r.title_en, t_zh: r.title_zh, out_en: r.outlet_en, out_zh: r.outlet_zh,
             ins: splitList(r.institutions), top: splitList(r.topics), pos: parsePos(r.positions),
             co: splitList(r.coauthors), stu: splitList(r.students),
-            ssrn: r.ssrn || "", nber: r.nber || "", doi: r.doi || "",
+            co_links: splitList(r.coauthor_links).map(function (m) { var sp = m.split("|"); return [sp[0], sp[1] || ""]; }),
+            ssrn: r.ssrn || "", nber: r.nber || "", doi: r.doi || "", arxiv: r.arxiv || "",
+            show: (r.show === undefined || r.show === "") ? true : r.show,
             media: splitList(r.media).map(function (m) { var sp = m.split("|"); return [sp[0], sp[1] || ""]; }),
-            s_en: r.summary_en, s_zh: r.summary_zh
+            s_en: r.summary_en, s_zh: r.summary_zh, ab_en: r.abstract_en, ab_zh: r.abstract_zh
           };
         });
       }
@@ -836,6 +869,7 @@
           return { id: r.id, name_en: r.name_en, name_zh: r.name_zh, year: parseInt(r.year, 10) || "",
             role: r.role || "", place_en: r.place_en, place_zh: r.place_zh,
             traj_en: splitList(r.trajectory_en), traj_zh: splitList(r.trajectory_zh),
+            show: (r.show === undefined || r.show === "") ? true : r.show,
             site: String(r.site).toLowerCase() === "true" || r.site === "1" };
         });
       }
