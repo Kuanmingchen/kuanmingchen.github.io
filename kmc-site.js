@@ -93,7 +93,7 @@
     },
     sub: {
       featured: { en: "Featured findings", zh: "\u91CD\u9EDE\u767C\u73FE" },
-      map:      { en: "Lifecycle map",     zh: "\u751F\u547D\u6B77\u7A0B\u5730\u5716" },
+      map:      { en: "Lifecycle map",     zh: "\u7814\u7A76\u9818\u57DF" },
       browse:   { en: "Browse all papers", zh: "\u6240\u6709\u8AD6\u6587" }
     }
   };
@@ -570,7 +570,7 @@
     var lang = s.lang;
     return researchSubnav("map", lang)
       + '<div style="padding:42px var(--px) 12px;"><h1 style="font-family:' + GR + '; font-size:46px; font-weight:600; letter-spacing:-.02em; margin:0 0 12px;">' + (lang === "zh" ? "\u6211\u7684\u7814\u7A76\u5730\u5716" : "A map of my research") + '</h1>'
-      + '<p style="font-size:18px; line-height:1.6; color:#3c3d36; max-width:680px; margin:0;">' + (lang === "zh" ? "<strong>\u5148\u9078\u4E00\u500B\u5236\u5EA6</strong>\uFF0C\u4F9D\u5176\u5C08\u5C6C\u6B77\u7A0B\u5C55\u958B\u6642\u9593\u8EF8\uFF1B<strong>\u6ED1\u904E\u4EFB\u4E00\u968E\u6BB5</strong>\u53EF\u770B\u8A72\u968E\u6BB5\u7684\u7814\u7A76\uFF0C<strong>\u9EDE\u9078</strong>\u5247\u986F\u793A\u5B8C\u6574\u8CC7\u8A0A\u3002" : "<strong>Pick an institution</strong> to lay out its own timeline, <strong>hover a stage</strong> to see the projects there, and <strong>click one</strong> for full detail.") + '</p></div>'
+      + '<p style="font-size:18px; line-height:1.6; color:#3c3d36; max-width:680px; margin:0;">' + (lang === "zh" ? "\u8ACB\u9078\u64C7\u7814\u7A76\u9818\u57DF\u53CA\u6642\u9593\u8EF8" : "<strong>Pick an institution</strong> to lay out its own timeline, <strong>hover a stage</strong> to see the projects there, and <strong>click one</strong> for full detail.") + '</p></div>'
       + '<div style="padding:30px var(--px) 48px;">' + researchBodyHTML(s) + '</div>';
   }
 
@@ -608,10 +608,10 @@
     var lang = s.lang;
     return researchSubnav("featured", lang)
       + '<div style="padding:42px var(--px) 8px;"><h1 style="font-family:' + GR + '; font-size:46px; font-weight:600; letter-spacing:-.02em; margin:0 0 12px;">' + (lang === "zh" ? "\u91CD\u9EDE\u767C\u73FE" : "Featured findings") + '</h1>'
-      + '<p style="font-size:18px; line-height:1.6; color:#3c3d36; max-width:660px; margin:0;">' + (lang === "zh" ? "\u4E00\u500B\u8F2A\u64AD\u7684\u7126\u9EDE\uFF0C\u6BCF\u9805\u90FD\u914D\u4E0A\u6700\u80FD\u8AAA\u660E\u5B83\u7684\u90A3\u500B\u6578\u5B57\u3002\u53EF\u9EDE\u9078\u5C0E\u89BD\u9EDE\u6216\u7BAD\u982D\u3002" : "A rotating spotlight, each with the single number that captures it. Click a dot or arrow to steer.") + '</p></div>'
+      + '<p style="font-size:18px; line-height:1.6; color:#3c3d36; max-width:660px; margin:0;">' + (lang === "zh" ? "\u7814\u7A76\u6210\u679C\u6458\u9304\u3002" : "A rotating spotlight, each with the single number that captures it. Click a dot or arrow to steer.") + '</p></div>'
       + '<div style="padding:28px var(--px) 6px;">' + featuredSpotlightHTML(s.featIdx || 0, lang) + '</div>'
       + '<div style="padding:16px var(--px) 6px;">' + featuredDotsHTML(s.featIdx || 0, lang) + '</div>'
-      + '<div style="padding:20px var(--px) 30px;"><a href="#/research" data-nav style="font-family:' + GR + '; font-size:13px; color:' + GREEN + ';">' + (lang === "zh" ? "\u5728\u751F\u547D\u6B77\u7A0B\u5730\u5716\u67E5\u770B\u6240\u6709\u7814\u7A76 \u2192" : "See all research on the lifecycle map \u2192") + '</a></div>';
+      + '<div style="padding:20px var(--px) 30px;"><a href="#/research" data-nav style="font-family:' + GR + '; font-size:13px; color:' + GREEN + ';">' + (lang === "zh" ? "\u5728\u7814\u7A76\u9818\u57DF\u67E5\u770B\u6240\u6709\u7814\u7A76 \u2192" : "See all research on the lifecycle map \u2192") + '</a></div>';
   }
 
   /* ====================  BROWSE  ==================== */
@@ -663,7 +663,7 @@
     var lang = s.lang;
     return researchSubnav("browse", lang)
       + '<div style="padding:42px var(--px) 14px;"><h1 style="font-family:' + GR + '; font-size:46px; font-weight:600; letter-spacing:-.02em; margin:0 0 12px;">' + (lang === "zh" ? "\u6240\u6709\u8AD6\u6587" : "Browse all papers") + '</h1>'
-      + '<p style="font-size:18px; line-height:1.6; color:#3c3d36; max-width:640px; margin:0;">' + (lang === "zh" ? "\u53EF\u641C\u5C0B\u7684\u5B8C\u6574\u6E05\u55AE\u3002\u540C\u7D44\u5167\u7684\u7BE9\u9078\u6703\u64F4\u5927\u7D50\u679C\uFF0C\u8DE8\u7D44\u5247\u7E2E\u5C0F\u7D50\u679C\u3002" : "The full list, searchable. Filters within a group widen results; across groups they narrow.") + '</p></div>'
+      + '<p style="font-size:18px; line-height:1.6; color:#3c3d36; max-width:640px; margin:0;">' + (lang === "zh" ? "\u8ACB\u641C\u5C0B\u6216\u7BE9\u9078\u3002" : "The full list, searchable. Filters within a group widen results; across groups they narrow.") + '</p></div>'
       + '<div style="padding:18px var(--px) 40px;">'
       + '<div style="display:flex; align-items:center; gap:12px; background:#fff; border:1px solid rgba(30,31,26,.16); border-radius:8px; padding:12px 16px; margin-bottom:20px;">'
       + '<span style="color:' + FAINT + '; font-size:16px;">\u2315</span>'
