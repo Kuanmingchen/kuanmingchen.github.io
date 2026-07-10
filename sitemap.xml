@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap for Kuan-Ming Chen's website.
+
+  NOTE: this site is a single page that switches sections via the URL hash
+  (#/research, #/students, ...). Search engines treat everything after "#"
+  as the same page, so there is only ONE indexable URL: the homepage.
+  Listing the hash sections separately would have no effect.
+
+  >>> Before submitting: replace https://kuanmingchen.github.io/ below with
+      your real address if you connect a custom domain (e.g.
+      https://kuanmingchen.com/). Update <lastmod> when you make major changes.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://kuanmingchen.github.io/</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
