@@ -10,7 +10,8 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-DWNRMYJMX6');
+  // Page views are sent by the app on every route change (see _pageview below)
+  gtag('config', 'G-DWNRMYJMX6', { send_page_view: false });
 </script>
 <script src="./support.js"></script>
 </head>
@@ -94,7 +95,7 @@ class Component extends DCLogic {
     var h = this._parseHash();
     Object.assign(this.state, this._routeState(h));
     // load data (live sheet or baked)
-    var go = () => window.KMC.load().then((data) => { window.KMC.setData(data); this.setState({ ready:true }); });
+    var go = () => window.KMC.load().then((data) => { window.KMC.setData(data); this.setState({ ready:true }); this._routeView(); });
     if(window.KMC) go();
     else this._poll = setInterval(() => { if(window.KMC){ clearInterval(this._poll); go(); } }, 40);
     // hash routing
@@ -102,6 +103,7 @@ class Component extends DCLogic {
       var st = this._routeState(this._parseHash());
       this.setState(st);
       try { window.scrollTo(0,0); } catch(e){}
+      if(this.state.ready) this._routeView(Object.assign({}, this.state, st));
     };
     window.addEventListener('hashchange', this._onHash);
     // featured auto-rotate
@@ -111,7 +113,22 @@ class Component extends DCLogic {
       }
     }, 5000);
   }
-  componentWillUnmount(){ if(this._poll) clearInterval(this._poll); if(this._featTimer) clearInterval(this._featTimer); window.removeEventListener('hashchange', this._onHash); }
+  componentWillUnmount(){ if(this._poll) clearInterval(this._poll); if(this._featTimer) clearInterval(this._featTimer); if(this._searchTimer) clearTimeout(this._searchTimer); window.removeEventListener('hashchange', this._onHash); }
+
+  // ---- Google Analytics ----
+  // The site is one page with #/ routes, so GA alone only sees the first load.
+  // Each route, research area and opened paper is sent as a virtual page view
+  // (e.g. /research/health, /paper/ipv); other interactions as events.
+  _track(name, params){ try { if(window.gtag) window.gtag('event', name, params || {}); } catch(e){} }
+  _pageview(path, title){
+    this._track('page_view', { page_location: location.origin + '/' + path, page_title: title + ' | Kuan-Ming Chen' });
+  }
+  _routeView(s){
+    s = s || this.state;
+    var r = s.route, titles = { home:'Home', research:'Research map', featured:'Featured findings', browse:'Browse papers', students:'Students', teaching:'Teaching', cv:'CV', personal:'Personal' };
+    if(r==='research') return this._pageview('research/' + s.inst, 'Research map: ' + s.inst);
+    this._pageview(r==='home' ? '' : r, titles[r] || r);
+  }
 
   _parseHash(){
     var raw = (location.hash || '').replace(/^#\/?/, '');
@@ -136,18 +153,23 @@ class Component extends DCLogic {
 
   onClick = (e) => {
     var t;
-    if((t = e.target.closest('[data-lang]'))){ var lg = t.getAttribute('data-lang'); try{ localStorage.setItem('kmc-lang', lg); }catch(err){} this.setState({ lang:lg }); return; }
+    if((t = e.target.closest('a[data-track]'))){ // outbound link: let it open, just record it
+      var pid0 = t.getAttribute('data-pid') || '';
+      this._track('link_click', { link_type: t.getAttribute('data-track'), paper_id: pid0, paper_title: pid0 ? this._paperTitle(pid0) : '', link_url: t.href });
+      return;
+    }
+    if((t = e.target.closest('[data-lang]'))){ var lg = t.getAttribute('data-lang'); try{ localStorage.setItem('kmc-lang', lg); }catch(err){} this.setState({ lang:lg }); this._track('change_language', { language:lg }); return; }
     if(e.target.closest('[data-nav]')) return; // let the anchor change the hash
-    if((t = e.target.closest('[data-inst]'))){ var inst = t.getAttribute('data-inst'); this.setState({ inst:inst, stage:window.KMC.firstStage(inst), pid:null }); return; }
-    if((t = e.target.closest('[data-open-pid]'))){ this.setState({ pid:t.getAttribute('data-open-pid') }); return; }
+    if((t = e.target.closest('[data-inst]'))){ var inst = t.getAttribute('data-inst'); this.setState({ inst:inst, stage:window.KMC.firstStage(inst), pid:null }); this._pageview('research/' + inst, 'Research map: ' + inst); return; }
+    if((t = e.target.closest('[data-open-pid]'))){ var pid = t.getAttribute('data-open-pid'); this.setState({ pid:pid }); this._pageview('paper/' + pid, this._paperTitle(pid)); return; }
     if(e.target.closest('[data-back]')){ this.setState({ pid:null }); return; }
-    if((t = e.target.closest('[data-stagecol]'))){ this.setState({ stage:t.getAttribute('data-stagecol'), pid:null }); return; }
-    if((t = e.target.closest('[data-mapfilter]'))){ this.setState({ filter:t.getAttribute('data-mapfilter') }); return; }
-    if((t = e.target.closest('[data-student-card]'))){ var id = t.getAttribute('data-student-card'); this.setState({ sOpen: this.state.sOpen===id ? null : id }); return; }
-    if((t = e.target.closest('[data-chip]'))){ var k = t.getAttribute('data-chip'); var labels = Object.assign({}, this.state.labels); labels[k] = !labels[k]; this.setState({ labels:labels }); return; }
-    if((t = e.target.closest('[data-feat-dot]'))){ this._featPaused = true; this.setState({ featIdx: parseInt(t.getAttribute('data-feat-dot'),10) }); return; }
-    if(e.target.closest('[data-feat-next]')){ this._featPaused = true; this.setState(s => ({ featIdx:(s.featIdx+1)%window.KMC.featuredCount() })); return; }
-    if(e.target.closest('[data-feat-prev]')){ this._featPaused = true; this.setState(s => ({ featIdx:(s.featIdx-1+window.KMC.featuredCount())%window.KMC.featuredCount() })); return; }
+    if((t = e.target.closest('[data-stagecol]'))){ var stg = t.getAttribute('data-stagecol'); this.setState({ stage:stg, pid:null }); this._track('select_stage', { institution:this.state.inst, stage:stg }); return; }
+    if((t = e.target.closest('[data-mapfilter]'))){ var f = t.getAttribute('data-mapfilter'); this.setState({ filter:f }); this._track('filter_status', { status:f }); return; }
+    if((t = e.target.closest('[data-student-card]'))){ var id = t.getAttribute('data-student-card'); if(this.state.sOpen!==id) this._track('view_student', { student_id:id }); this.setState({ sOpen: this.state.sOpen===id ? null : id }); return; }
+    if((t = e.target.closest('[data-chip]'))){ var k = t.getAttribute('data-chip'); var labels = Object.assign({}, this.state.labels); labels[k] = !labels[k]; this.setState({ labels:labels }); if(labels[k]) this._track('filter_papers', { filter:k }); return; }
+    if((t = e.target.closest('[data-feat-dot]'))){ this._featPaused = true; this.setState({ featIdx: parseInt(t.getAttribute('data-feat-dot'),10) }); this._track('featured_nav', { method:'dot' }); return; }
+    if(e.target.closest('[data-feat-next]')){ this._featPaused = true; this.setState(s => ({ featIdx:(s.featIdx+1)%window.KMC.featuredCount() })); this._track('featured_nav', { method:'next' }); return; }
+    if(e.target.closest('[data-feat-prev]')){ this._featPaused = true; this.setState(s => ({ featIdx:(s.featIdx-1+window.KMC.featuredCount())%window.KMC.featuredCount() })); this._track('featured_nav', { method:'prev' }); return; }
   };
   onOver = (e) => {
     if(this.state.pid || this.state.route!=='research') return;
@@ -163,7 +185,12 @@ class Component extends DCLogic {
     if(list) list.innerHTML = window.KMC.browseListHTML(this.buildState());
     var cnt = root.querySelector('[data-browse-count]');
     if(cnt) cnt.textContent = window.KMC.browseCount(this.buildState());
+    // send the search once typing pauses, not on every keystroke
+    clearTimeout(this._searchTimer);
+    var q = this._q.trim();
+    if(q.length >= 2) this._searchTimer = setTimeout(() => this._track('search', { search_term:q }), 1500);
   };
+  _paperTitle(pid){ var p = window.KMC.paper(pid); return p ? p.t_en : pid; }
 
   renderVals(){
     var mk = (html, extra) => React.createElement('div', Object.assign({ dangerouslySetInnerHTML:{ __html:html } }, extra||{}));

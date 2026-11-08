@@ -78,7 +78,10 @@
     inequality: { en: "Inequality", zh: "\u4E0D\u5E73\u7B49" },
     legal:      { en: "Legal",      zh: "\u6CD5\u5F8B" },
     firms:      { en: "Firms",      zh: "\u5EE0\u5546" },
-    aging:      { en: "Aging",      zh: "\u9AD8\u9F61" }
+    aging:      { en: "Aging",      zh: "\u9AD8\u9F61" },
+    education:  { en: "Education",  zh: "\u6559\u80B2" },
+    pets:       { en: "Pets",       zh: "\u5BF5\u7269" },
+    AI:         { en: "AI",         zh: "\u4EBA\u5DE5\u667A\u6167" }
   };
 
   /* UI chrome strings */
@@ -101,256 +104,1862 @@
   /* ----------------------------------------------------------
      3 · BAKED CONTENT  (mirror of the spreadsheet)
      ---------------------------------------------------------- */
+  /* Mirror of the Google Sheet as of 2026-11-08 — used only if the live sheet cannot be loaded. */
   var DATA = {
-    settings: {
-      name_en: "Kuan-Ming Chen", name_zh: "\u9673\u51A0\u9298",
-      role_en: "Associate Professor of Economics", role_zh: "\u7D93\u6FDF\u5B78\u7CFB\u526F\u6559\u6388",
-      dept_en: "Department of Economics, National Taiwan University",
-      dept_zh: "\u570B\u7ACB\u81FA\u7063\u5927\u5B78\u7D93\u6FDF\u5B78\u7CFB",
-      center_en: "Director, Behavioral & Data Science Research Center, NTU",
-      center_zh: "\u81FA\u5927\u884C\u70BA\u8207\u8CC7\u6599\u79D1\u5B78\u7814\u7A76\u4E2D\u5FC3\u4E3B\u4EFB",
-      hero_en: "Greetings!",
-      hero_zh: "\u60A8\u597D\uFF01",
-      blurb_en: "I am an associate professor at National Taiwan University, where I also direct the Behavioral & Data Science Research Center. I study how family members support one another: how families are formed, how care is arranged for children and older adults, and how financial tools are used to support family members.",
-      blurb_zh: "\u6211\u662F\u570B\u7ACB\u81FA\u7063\u5927\u5B78\u7D93\u6FDF\u5B78\u7CFB\u526F\u6559\u6388\uFF0C\u4E26\u64D4\u4EFB\u884C\u70BA\u8207\u8CC7\u6599\u79D1\u5B78\u7814\u7A76\u4E2D\u5FC3\u4E3B\u4EFB\u3002\u6211\u7814\u7A76\u5BB6\u4EBA\u5982\u4F55\u4E92\u76F8\u652F\u6301\uFF1A\u5BB6\u5EAD\u5982\u4F55\u5F62\u6210\u3001\u5982\u4F55\u70BA\u5152\u7AE5\u8207\u9577\u8005\u5B89\u6392\u7167\u8B77\uFF0C\u4EE5\u53CA\u5BB6\u5EAD\u5982\u4F55\u904B\u7528\u91D1\u878D\u5DE5\u5177\u4E92\u76F8\u652F\u6301\u3002",
-      email: "kuanmingchen@ntu.edu.tw",
-      scholar: "https://scholar.google.com/citations?user=vNel9PsAAAAJ",
-      orcid: "https://orcid.org/0009-0005-3881-5058",
-      cv_url: "https://drive.google.com/file/d/1GTHTW3U1bK2jiWnSAzHgC3q-KiL3jVZu/view",
-      dept_url: "https://econ.ntu.edu.tw/",
-      center_url: "https://bdsrc.ntu.edu.tw/",
-      photo: "assets/headshot.jpg",
-      nav_teaching: "false",
-      cv_page: "false",
-      student_details: "false",
-      nav_personal: "false"
+    "settings": {
+      "name_en": "Kuan-Ming Chen",
+      "name_zh": "\u9673\u51A0\u9298",
+      "role_en": "Associate Professor of Economics",
+      "role_zh": "\u7D93\u6FDF\u5B78\u7CFB\u526F\u6559\u6388",
+      "dept_en": "Department of Economics, National Taiwan University",
+      "dept_zh": "\u570B\u7ACB\u81FA\u7063\u5927\u5B78\u7D93\u6FDF\u5B78\u7CFB",
+      "center_en": "Director, Behavioral & Data Science Research Center, NTU",
+      "center_zh": "\u81FA\u5927\u884C\u70BA\u8207\u8CC7\u6599\u79D1\u5B78\u7814\u7A76\u4E2D\u5FC3\u57F7\u884C\u9577",
+      "hero_en": "Greetings!",
+      "hero_zh": "\u60A8\u597D\uFF01",
+      "blurb_en": "I am an associate professor at National Taiwan University, where I also direct the Behavioral & Data Science Research Center. My research focuses on Taiwan. My past work has examined how families form and support one another, while my more recent research has expanded to issues in law, healthcare, and other areas of the labor market.",
+      "blurb_zh": "\u6211\u662F\u570B\u7ACB\u81FA\u7063\u5927\u5B78\u7D93\u6FDF\u5B78\u7CFB\u526F\u6559\u6388\uFF0C\u4E26\u64D4\u4EFB\u884C\u70BA\u8207\u8CC7\u6599\u79D1\u5B78\u7814\u7A76\u4E2D\u5FC3\u57F7\u884C\u9577\u3002\u6211\u7814\u7A76\u81FA\u7063\u3002\u904E\u53BB\u7684\u7814\u7A76\u63A2\u8A0E\u5BB6\u4EBA\u5982\u4F55\u5F62\u6210\u8207\u4E92\u76F8\u652F\u6301\uFF0C\u8FD1\u4F86\u62D3\u5C55\u5230\u6CD5\u5F8B\u3001\u91AB\u7642\u4EE5\u53CA\u5176\u4ED6\u52DE\u52D5\u5E02\u5834\u8B70\u984C\u3002",
+      "email": "kuanmingchen@ntu.edu.tw",
+      "scholar": "https://scholar.google.com/citations?user=vNel9PsAAAAJ",
+      "orcid": "https://orcid.org/0009-0005-3881-5058",
+      "cv_url": "https://drive.google.com/file/d/1GTHTW3U1bK2jiWnSAzHgC3q-KiL3jVZu/view",
+      "dept_url": "https://econ.ntu.edu.tw/",
+      "center_url": "https://bdsrc.ntu.edu.tw/",
+      "photo": "assets/headshot.jpg",
+      "nav_teaching": "false",
+      "cv_page": "false",
+      "student_details": "false",
+      "nav_personal": "false"
     },
-
-    papers: [
-      { id: "instmajor", st: "rr", year: 2025,
-        t_en: "Institution or Major? Understanding Student Preferences in College Admissions",
-        t_zh: "\u9078\u6821\u9084\u662F\u9078\u7CFB\uFF1F\u7406\u89E3\u5927\u5B78\u62DB\u751F\u4E2D\u7684\u5B78\u751F\u504F\u597D",
-        out_en: "Conditionally accepted \u00B7 Economic Inquiry", out_zh: "\u6709\u689D\u4EF6\u63A5\u53D7 \u00B7 Economic Inquiry",
-        ins: ["household"], top: ["labor", "inequality", "children"], pos: { household: "edu" },
-        co: ["Yu-Chang Chen", "Chi-Chao Hung", "Hau-Hung Yang"], stu: [], ssrn: "5423077",
-        s_en: "Where applicants must pick an institution and a major at once, students prioritize institutional ranking over field of study \u2014 with little variation across gender or region.",
-        s_zh: "\u7576\u7533\u8ACB\u8005\u5FC5\u9808\u540C\u6642\u9078\u64C7\u6821\u8207\u7CFB\uFF0C\u5B78\u751F\u660E\u986F\u504F\u597D\u6821\u7684\u6392\u540D\u52DD\u904E\u7CFB\u7684\u9818\u57DF\uFF0C\u4E14\u6027\u5225\u8207\u5730\u5340\u5DEE\u7570\u5F88\u5C0F\u3002" },
-
-      { id: "incineq", st: "rr", year: 2024,
-        t_en: "Income Inequality and Dynamics in Taiwan",
-        t_zh: "\u81FA\u7063\u7684\u6240\u5F97\u4E0D\u5E73\u7B49\u8207\u52D5\u614B",
-        out_en: "R&R \u00B7 Journal of Macroeconomics", out_zh: "\u4FEE\u8A02\u91CD\u6295 \u00B7 Journal of Macroeconomics",
-        ins: ["firms"], top: ["inequality", "labor"], pos: { firms: "wages" },
-        co: ["Hsuan-Li Su", "Yu-Ting Chiang", "Ming-Jen Lin"], stu: ["huang"], ssrn: "",
-        s_en: "Using administrative tax data (2004\u20132020), earnings inequality fell for both men and women \u2014 driven by fast growth among low earners, with women at the bottom gaining most.",
-        s_zh: "\u4F7F\u7528 2004\u20132020 \u5E74\u7A05\u7C4D\u884C\u653F\u8CC7\u6599\uFF0C\u7537\u5973\u7684\u6240\u5F97\u4E0D\u5E73\u7B49\u90FD\u4E0B\u964D\uFF0C\u4E3B\u8981\u4F86\u81EA\u4F4E\u6240\u5F97\u8005\u7684\u5FEB\u901F\u6210\u9577\uFF0C\u4EE5\u5E95\u5C64\u5973\u6027\u7372\u76CA\u6700\u5927\u3002" },
-
-      { id: "catsdogs", st: "working", year: 2025,
-        t_en: "Cats, Dogs, and Babies: Quasi-Experimental Evidence on Substitutes or Complements",
-        t_zh: "\u8C93\u3001\u72D7\u8207\u5BF6\u5BF6\uFF1A\u66FF\u4EE3\u6216\u4E92\u88DC\u7684\u6E96\u5BE6\u9A57\u8B49\u64DA",
-        out_en: "Working paper", out_zh: "\u5DE5\u4F5C\u8AD6\u6587",
-        ins: ["household"], top: ["fertility", "family"], pos: { household: "family" },
-        co: ["Ming-Jen Lin", "Hau-Hung Yang", "Yu-hsuan Shirley Yen"], stu: ["lo"], ssrn: "5656231", arxiv: "2508.00000",
-        co_links: [["Ming-Jen Lin", "https://sites.google.com/site/mingjenlin/"]],
-        ab_en: "Are pets substitutes or complements for children? We link Taiwan's national pet-registration records to individual tax data covering 23 million people and exploit the timing of births and pet adoptions. Dog adoption rises 21% in the year after a birth, and adopting a dog raises the probability of a subsequent birth by 33%. The patterns are inconsistent with pets substituting for children and instead point to shared complementarities in the household's demand for caregiving.",
-        ab_zh: "\u5BF5\u7269\u662F\u5B69\u5B50\u7684\u66FF\u4EE3\u54C1\u9084\u662F\u4E92\u88DC\u54C1\uFF1F\u6211\u5011\u4E32\u63A5\u81FA\u7063\u5168\u570B\u5BF5\u7269\u767B\u8A18\u8207\u500B\u4EBA\u7A05\u7C4D\u8CC7\u6599\uFF08\u6DB5\u84CB 2300 \u842C\u4EBA\uFF09\uFF0C\u5229\u7528\u751F\u80B2\u8207\u990A\u5BF5\u7269\u7684\u6642\u9593\u5DEE\u7570\u3002\u751F\u80B2\u5F8C\u4E00\u5E74\u990A\u72D7\u6BD4\u4F8B\u4E0A\u5347 21%\uFF0C\u990A\u72D7\u4F7F\u65E5\u5F8C\u751F\u80B2\u6A5F\u7387\u63D0\u9AD8 33%\uFF0C\u8207\u66FF\u4EE3\u95DC\u4FC2\u4E0D\u7B26\uFF0C\u800C\u6307\u5411\u5BB6\u5EAD\u7167\u8B77\u9700\u6C42\u7684\u4E92\u88DC\u6027\u3002",
-        s_en: "Linking Taiwan's pet registry to tax records (23M people), dog adoption rises 21% after a birth, and adopting a dog raises the chance of later childbearing by 33% \u2014 pets and children are complements.",
-        s_zh: "\u4E32\u63A5\u81FA\u7063\u5BF5\u7269\u767B\u8A18\u8207\u7A05\u7C4D\u8CC7\u6599\uFF082300 \u842C\u4EBA\uFF09\uFF0C\u751F\u80B2\u5F8C\u990A\u72D7\u6BD4\u4F8B\u4E0A\u5347 21%\uFF0C\u800C\u990A\u72D7\u4F7F\u65E5\u5F8C\u751F\u80B2\u6A5F\u7387\u63D0\u9AD8 33%\u2014\u2014\u5BF5\u7269\u8207\u5B69\u5B50\u662F\u4E92\u88DC\u800C\u975E\u66FF\u4EE3\u3002" },
-
-      { id: "careworkers", st: "working", year: 2024,
-        t_en: "Foreign-Born Care Workers and Their Care Recipients' Health Outcomes",
-        t_zh: "\u5916\u7C4D\u770B\u8B77\u5DE5\u8207\u53D7\u7167\u8B77\u8005\u7684\u5065\u5EB7\u7D50\u679C",
-        out_en: "Working paper", out_zh: "\u5DE5\u4F5C\u8AD6\u6587",
-        ins: ["household", "health"], top: ["aging", "health", "labor"], pos: { household: "care", health: "ltc" },
-        co: ["Su-Yuan Chan"], stu: [], ssrn: "4966797",
-        s_en: "Hiring a live-in foreign-born care worker significantly reduces inpatient, outpatient and ER use \u2014 likely because health improves, with fewer falls.",
-        s_zh: "\u96C7\u7528\u540C\u4F4F\u7684\u5916\u7C4D\u770B\u8B77\u5DE5\u986F\u8457\u964D\u4F4E\u4F4F\u9662\u3001\u9580\u8A3A\u8207\u6025\u8A3A\u4F7F\u7528\u2014\u2014\u53EF\u80FD\u56E0\u5065\u5EB7\u6539\u5584\u4E14\u8DCC\u5012\u6E1B\u5C11\u3002" },
-
-      { id: "healthchecks", st: "working", year: 2024,
-        t_en: "Selecting the Patients Who Benefit the Most: Evidence from Marginal Patients in Health Checks",
-        t_zh: "\u7BE9\u9078\u53D7\u76CA\u6700\u5927\u7684\u75C5\u60A3\uFF1A\u4F86\u81EA\u5065\u6AA2\u908A\u969B\u75C5\u60A3\u7684\u8B49\u64DA",
-        out_en: "Working paper", out_zh: "\u5DE5\u4F5C\u8AD6\u6587",
-        ins: ["health"], top: ["health", "inequality"], pos: { health: "screening" },
-        co: ["Lin-Tung Tsai"], stu: [], ssrn: "4858772",
-        s_en: "Across 6M Taiwanese health checks, a hyperlipidemia diagnosis cuts short-term complications by 10.8%; age is the single best variable to target \u2014 the oldest 20% gain 3.5\u00D7 the benefit.",
-        s_zh: "\u5728 600 \u842C\u6B21\u5065\u6AA2\u4E2D\uFF0C\u9AD8\u8840\u8102\u8A3A\u65B7\u4F7F\u77ED\u671F\u4F75\u767C\u75C7\u964D\u4F4E 10.8%\uFF1B\u4EE5\u5E74\u9F61\u70BA\u7BE9\u9078\u4F9D\u64DA\u6700\u4F73\u2014\u2014\u6700\u5E74\u9577\u7684 20% \u53D7\u76CA\u9054 3.5 \u500D\u3002" },
-
-      { id: "careshocks", st: "working", year: 2024,
-        t_en: "Family Trajectories and the Burden of Care in the Aftermath of Old-Age Health Shocks",
-        t_zh: "\u8001\u5E74\u5065\u5EB7\u885D\u64CA\u5F8C\u7684\u5BB6\u5EAD\u8ECC\u8DE1\u8207\u7167\u8B77\u8CA0\u64D4",
-        out_en: "Working paper", out_zh: "\u5DE5\u4F5C\u8AD6\u6587",
-        ins: ["household", "health"], top: ["aging", "family", "health"], pos: { household: "care", health: "ltc" },
-        co: ["Maxwell Kellogg", "Kuan-Ju Tseng"], stu: ["huang"], ssrn: "4741990",
-        s_en: "Health shocks to the elderly make large families grow larger, while small families face sharp rises in mortality \u2014 \u201Cdeaths of despair.\u201D Expanding access to live-in caregivers makes that mortality response vanish.",
-        s_zh: "\u8001\u5E74\u5065\u5EB7\u885D\u64CA\u4F7F\u5927\u5BB6\u5EAD\u66F4\u5927\uFF0C\u5C0F\u5BB6\u5EAD\u5247\u9762\u81E8\u6B7B\u4EA1\u98A8\u96AA\u9AD8\u6F32\u3002\u64F4\u5927\u540C\u4F4F\u770B\u8B77\u7BA1\u9053\u53EF\u4F7F\u9019\u985E\u6B7B\u4EA1\u53CD\u61C9\u6D88\u5931\u3002" },
-
-      { id: "inherit", st: "progress", year: 2025,
-        t_en: "The Effect of House-Inheriting on Labor Decisions",
-        t_zh: "\u7E7C\u627F\u623F\u7522\u5C0D\u52DE\u52D5\u6C7A\u7B56\u7684\u5F71\u97FF",
-        out_en: "In progress", out_zh: "\u9032\u884C\u4E2D",
-        ins: ["household", "legal"], top: ["aging", "labor", "inequality"], pos: { household: "care", legal: "reform" },
-        co: ["Ming-Jen Lin", "Kuan-Ju Tseng"], stu: [], ssrn: "",
-        s_en: "Comparing people who lost a parent with and without inheriting a house, inheriting a house lowers labor income and the probability of working \u2014 a Carnegie effect that spills over to spouses.",
-        s_zh: "\u6BD4\u8F03\u5931\u53BB\u96D9\u89AA\u4F46\u662F\u5426\u7E7C\u627F\u623F\u7522\u7684\u4EBA\uFF0C\u7E7C\u627F\u623F\u7522\u964D\u4F4E\u52DE\u52D5\u6240\u5F97\u8207\u5C31\u696D\u6A5F\u7387\u2014\u2014\u4E26\u6EA2\u51FA\u81F3\u914D\u5076\u3002" },
-
-      { id: "spatialdating", st: "progress", year: 2025,
-        t_en: "Spatial Learning in Online Dating",
-        t_zh: "\u7DDA\u4E0A\u4EA4\u53CB\u4E2D\u7684\u7A7A\u9593\u5B78\u7FD2",
-        out_en: "In progress", out_zh: "\u9032\u884C\u4E2D",
-        ins: ["firms", "household"], top: ["matching"], pos: { firms: "platforms", household: "dating" },
-        co: ["Yen-Chi Chen", "Ming-Jen Lin", "Yi Xin"], stu: ["lin-c"], ssrn: "",
-        s_en: "How users learn about the dating market as they search across space.",
-        s_zh: "\u4F7F\u7528\u8005\u5728\u8DE8\u7A7A\u9593\u641C\u5C0B\u6642\uFF0C\u5982\u4F55\u5B78\u7FD2\u8A8D\u8B58\u4EA4\u53CB\u5E02\u5834\u3002" },
-
-      { id: "motherhood", st: "progress", year: 2025,
-        t_en: "Delays in Motherhood: Differentiating the Effects of Birth and Miscarriage",
-        t_zh: "\u5EF6\u5F8C\u751F\u80B2\uFF1A\u5340\u5206\u751F\u7522\u8207\u6D41\u7522\u7684\u5F71\u97FF",
-        out_en: "In progress", out_zh: "\u9032\u884C\u4E2D",
-        ins: ["household"], top: ["fertility", "family", "health"], pos: { household: "family" },
-        co: ["Yenfang Chieng", "Hui Ding", "Warn Lekfuangfu"], stu: [], ssrn: "",
-        s_en: "Separating how births and miscarriages each shape the timing of motherhood and later outcomes.",
-        s_zh: "\u5206\u96E2\u751F\u7522\u8207\u6D41\u7522\u5404\u81EA\u5982\u4F55\u5F71\u97FF\u751F\u80B2\u6642\u9593\u8207\u65E5\u5F8C\u7D50\u679C\u3002" },
-
-      { id: "schoolmh", st: "forthcoming", year: 2025,
-        t_en: "School Milestones Impact Child Mental Health in Taiwan",
-        t_zh: "\u5C31\u5B78\u91CC\u7A0B\u7891\u5C0D\u81FA\u7063\u5152\u7AE5\u5FC3\u7406\u5065\u5EB7\u7684\u5F71\u97FF",
-        out_en: "Forthcoming \u00B7 The Economic Journal", out_zh: "\u5373\u5C07\u767C\u8868 \u00B7 The Economic Journal",
-        ins: ["household", "health"], top: ["children", "health"], pos: { household: "child", health: "patients" },
-        co: ["Janet Currie", "Hui Ding", "Wei-Lun Lo"], stu: ["lo"], ssrn: "4929521", nber: "32842",
-        s_en: "School entry raises mental-health prescribing (ADHD and depression); psychiatric medication use falls sharply after high-stakes tests \u2014 effects track when educational stress rises and is relieved.",
-        s_zh: "\u5165\u5B78\u63D0\u9AD8\u5FC3\u7406\u5065\u5EB7\u7528\u85E5\uFF08\u904E\u52D5\u8207\u6182\u9B31\uFF09\uFF1B\u8003\u8A66\u5F8C\u7528\u85E5\u986F\u8457\u4E0B\u964D\u2014\u2014\u6548\u679C\u96A8\u6559\u80B2\u58D3\u529B\u4E0A\u5347\u8207\u7D13\u89E3\u800C\u8B8A\u3002" },
-
-      { id: "childdis", st: "forthcoming", year: 2025,
-        t_en: "Impacts of Childhood Disability on Family: Labor, Marriage, Fertility, and Depression",
-        t_zh: "\u5152\u7AE5\u8EAB\u5FC3\u969C\u7919\u5C0D\u5BB6\u5EAD\u7684\u5F71\u97FF\uFF1A\u52DE\u52D5\u3001\u5A5A\u59FB\u3001\u751F\u80B2\u8207\u6182\u9B31",
-        out_en: "Forthcoming \u00B7 Journal of Public Economics", out_zh: "\u5373\u5C07\u767C\u8868 \u00B7 Journal of Public Economics",
-        ins: ["household"], top: ["children", "family", "inequality"], pos: { household: "child" },
-        co: ["Ming-Jen Lin", "Wei-Lun Lo"], stu: ["chen-r"], ssrn: "4088796",
-        s_en: "A child's cerebral palsy lowers the mother's probability of working by 5.5pp, raises divorce by 2.1pp and depression by 25%, with larger effects for worse-off families.",
-        s_zh: "\u5B69\u5B50\u7F79\u60A3\u8166\u6027\u9EBB\u75FA\u4F7F\u6BCD\u89AA\u5C31\u696D\u6A5F\u7387\u4E0B\u964D 5.5 \u500B\u767E\u5206\u9EDE\uFF0C\u96E2\u5A5A\u589E\u52A0 2.1 \u500B\u767E\u5206\u9EDE\u3001\u6182\u9B31\u589E\u52A0 25%\uFF0C\u5C0D\u8655\u5883\u8F03\u5DEE\u7684\u5BB6\u5EAD\u5F71\u97FF\u66F4\u5927\u3002" },
-
-      { id: "ipv", st: "forthcoming", year: 2025,
-        t_en: "Breaking Silence: How Intimate Partner Violence and Reporting Shape Later Life Outcomes",
-        t_zh: "\u6253\u7834\u6C89\u9ED8\uFF1A\u89AA\u5BC6\u95DC\u4FC2\u66B4\u529B\u8207\u901A\u5831\u5982\u4F55\u5F62\u5851\u65E5\u5F8C\u4EBA\u751F",
-        out_en: "Forthcoming \u00B7 Journal of Labor Economics", out_zh: "\u5373\u5C07\u767C\u8868 \u00B7 Journal of Labor Economics",
-        ins: ["legal", "household"], top: ["family", "legal"], pos: { household: "family", legal: "reporting" },
-        co: ["Harrison Chang", "Shiau-Fang Chao", "Ming-Jen Lin"], stu: [], ssrn: "4475647",
-        media: [["CNA", "https://www.cna.com.tw/news/ahel/202506240134.aspx"], ["UDN", "https://udn.com/news/story/7266/8827384"], ["LTN", "https://news.ltn.com.tw/news/life/paper/1713217"]],
-        s_en: "Separating the violence effect from the reporting effect: divorce rises after a report, women's employment recovers after reporting, and depression visits rise with both violence and reporting.",
-        s_zh: "\u5206\u96E2\u66B4\u529B\u6548\u61C9\u8207\u901A\u5831\u6548\u61C9\uFF1A\u901A\u5831\u5F8C\u96E2\u5A5A\u4E0A\u5347\uFF0C\u5973\u6027\u5C31\u696D\u5728\u901A\u5831\u5F8C\u56DE\u5347\uFF0C\u800C\u6182\u9B31\u9580\u8A3A\u96A8\u66B4\u529B\u8207\u901A\u5831\u4E0A\u5347\u3002" },
-
-      { id: "sorting", st: "forthcoming", year: 2025,
-        t_en: "Labor Market Sorting in Taiwan",
-        t_zh: "\u81FA\u7063\u52DE\u52D5\u5E02\u5834\u7684\u914D\u5C0D",
-        out_en: "Forthcoming \u00B7 Taiwan Economic Review", out_zh: "\u5373\u5C07\u767C\u8868 \u00B7 \u7D93\u6FDF\u8AD6\u6587\u53E2\u520A",
-        ins: ["firms"], top: ["labor", "firms", "inequality"], pos: { firms: "networks" },
-        co: ["Lin-Tung Tsai", "Hau-Hung Yang"], stu: [], ssrn: "5149991",
-        s_en: "First bias-corrected AKM estimates for Asia: individual effects explain 60% of wage variance, firms 14%, and sorting 13.5% \u2014 sorting nearly doubled over 15 years.",
-        s_zh: "\u4E9E\u6D32\u9996\u500B\u504F\u8AA4\u4FEE\u6B63\u7684 AKM \u4F30\u8A08\uFF1A\u500B\u4EBA\u6548\u679C\u89E3\u91CB 60% \u85AA\u8CC7\u8B8A\u7570\u3001\u5EE0\u5546 14%\u3001\u914D\u5C0D 13.5%\u2014\u2014\u914D\u5C0D\u6210\u5206\u5341\u4E94\u5E74\u5167\u8FD1\u4E4E\u500D\u589E\u3002" },
-
-      { id: "reswage", st: "published", year: 2025,
-        t_en: "Reservation Wages and Workers' Valuation of Job Flexibility: Evidence from a Natural Field Experiment",
-        t_zh: "\u4FDD\u7559\u5DE5\u8CC7\u8207\u52DE\u5DE5\u5C0D\u5DE5\u4F5C\u5F48\u6027\u7684\u8A55\u50F9\uFF1A\u4F86\u81EA\u81EA\u7136\u7530\u91CE\u5BE6\u9A57\u7684\u8B49\u64DA",
-        out_en: "Journal of the European Economic Association, 2025", out_zh: "Journal of the European Economic Association\uFF0C2025",
-        ins: ["firms"], top: ["labor"], pos: { firms: "wages" },
-        co: ["Claire Ding", "John A. List", "Magne Mogstad"], stu: [], ssrn: "3686752",
-        doi: "https://doi.org/10.1093/jeea/jvaf022",
-        s_en: "A large Uber field experiment recovers labor-supply elasticities and how much drivers value the ability to customize and adjust their own schedule.",
-        s_zh: "\u4E00\u9805\u5927\u578B Uber \u7530\u91CE\u5BE6\u9A57\u4F30\u8A08\u52DE\u52D5\u4F9B\u7D66\u5F48\u6027\uFF0C\u4EE5\u53CA\u99D5\u99DB\u8005\u5C0D\u81EA\u8A02\u8207\u8ABF\u6574\u73ED\u8868\u80FD\u529B\u7684\u8A55\u50F9\u3002" },
-
-      { id: "dating", st: "published", year: 2023,
-        t_en: "Reducing Recommendation Inequality via Two-Sided Matching: A Field Experiment of Online Dating",
-        t_zh: "\u4EE5\u96D9\u908A\u5A92\u5408\u964D\u4F4E\u63A8\u85A6\u4E0D\u5E73\u7B49\uFF1A\u7DDA\u4E0A\u4EA4\u53CB\u7684\u7530\u91CE\u5BE6\u9A57",
-        out_en: "International Economic Review, 2023", out_zh: "International Economic Review\uFF0C2023",
-        ins: ["firms"], top: ["matching"], pos: { firms: "platforms" },
-        co: ["Ming-Jen Lin", "Yu-Wei Hsieh"], stu: ["lin-c"], ssrn: "3718920",
-        doi: "https://onlinelibrary.wiley.com/doi/epdf/10.1111/iere.12631",
-        s_en: "A matching-theory recommender beats popularity-based algorithms: it produces more matches, spreads attention more evenly, and makes male users 4\u00D7 more likely to receive a response.",
-        s_zh: "\u4EE5\u5A92\u5408\u7406\u8AD6\u70BA\u57FA\u790E\u7684\u63A8\u85A6\u7CFB\u7D71\u512A\u65BC\u4EE5\u4EBA\u6C23\u70BA\u672C\u7684\u6F14\u7B97\u6CD5\uFF1A\u914D\u5C0D\u66F4\u591A\u3001\u95DC\u6CE8\u66F4\u5747\uFF0C\u4E26\u4F7F\u7537\u6027\u4F7F\u7528\u8005\u7372\u5F97\u56DE\u8986\u7684\u6A5F\u7387\u63D0\u9AD8 4 \u500D\u3002" }
+    "papers": [
+      {
+        "id": "instmajor",
+        "st": "published",
+        "year": 2026,
+        "t_en": "Institution or Major? Understanding Student Preferences in College Admissions",
+        "t_zh": "\u9078\u6821\u6216\u9078\u7CFB\uFF1F\u5B78\u751F\u7684\u5927\u5B78\u504F\u597D",
+        "out_en": "Economic Inquiry, 2026",
+        "out_zh": "Economic Inquiry\uFF0C2026",
+        "ins": [
+          "household"
+        ],
+        "top": [
+          "labor",
+          "education"
+        ],
+        "pos": {
+          "household": "edu"
+        },
+        "co": [
+          "Yu-Chang Chen",
+          "Chi-Chao Hung",
+          "Hau-Hung Yang"
+        ],
+        "stu": [
+          "CCH",
+          "HHY"
+        ],
+        "co_links": [],
+        "ssrn": "5423077",
+        "nber": "",
+        "doi": "https://doi.org/10.1111/ecin.70089",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "Where applicants must pick an institution and a major at once, students prioritize institutional ranking over field of study \u2014 with little variation across gender or region.",
+        "s_zh": "\u7576\u7533\u8ACB\u8005\u5FC5\u9808\u540C\u6642\u9078\u64C7\u6821\u8207\u7CFB\uFF0C\u5B78\u751F\u660E\u986F\u504F\u597D\u6821\u7684\u6392\u540D\u52DD\u904E\u7CFB\u7684\u9818\u57DF\uFF0C\u4E14\u6027\u5225\u8207\u5730\u5340\u5DEE\u7570\u5F88\u5C0F\u3002",
+        "ab_en": "",
+        "ab_zh": ""
+      },
+      {
+        "id": "incineq",
+        "st": "published",
+        "year": 2026,
+        "t_en": "Income Inequality and Dynamics in Taiwan",
+        "t_zh": "\u81FA\u7063\u7684\u6240\u5F97\u4E0D\u5E73\u7B49\u52D5\u614B",
+        "out_en": "Journal of Macroeconomics, 2026",
+        "out_zh": "Journal of Macroeconomics\uFF0C2026",
+        "ins": [
+          "household",
+          "firms"
+        ],
+        "top": [
+          "inequality",
+          "labor"
+        ],
+        "pos": {
+          "household": "work",
+          "firms": "wages"
+        },
+        "co": [
+          "Hsuan-Li Su",
+          "Yu-Ting Chiang",
+          "Ming-Jen Lin"
+        ],
+        "stu": [
+          "WQD",
+          "MLT",
+          "CYY"
+        ],
+        "co_links": [],
+        "ssrn": "",
+        "nber": "",
+        "doi": "",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "Using administrative tax data (2004\u20132020), earnings inequality fell for both men and women \u2014 driven by fast growth among low earners, with women at the bottom gaining most.",
+        "s_zh": "\u4F7F\u7528 2004\u20132020 \u5E74\u7A05\u7C4D\u884C\u653F\u8CC7\u6599\uFF0C\u7537\u5973\u7684\u6240\u5F97\u4E0D\u5E73\u7B49\u90FD\u4E0B\u964D\uFF0C\u4E3B\u8981\u4F86\u81EA\u4F4E\u6240\u5F97\u8005\u7684\u5FEB\u901F\u6210\u9577\uFF0C\u4EE5\u5E95\u5C64\u5973\u6027\u7372\u76CA\u6700\u5927\u3002",
+        "ab_en": "",
+        "ab_zh": ""
+      },
+      {
+        "id": "catsdogs",
+        "st": "working",
+        "year": 2026,
+        "t_en": "Cats, Dogs, and Babies: Quasi-Experimental Evidence on Substitutes or Complements",
+        "t_zh": "\u8C93\u3001\u72D7\u8207\u5BF6\u5BF6\uFF1A\u66FF\u4EE3\u6216\u4E92\u88DC\uFF1F",
+        "out_en": "Working paper",
+        "out_zh": "\u5DE5\u4F5C\u8AD6\u6587",
+        "ins": [
+          "household"
+        ],
+        "top": [
+          "fertility",
+          "family",
+          "pets"
+        ],
+        "pos": {
+          "household": "family"
+        },
+        "co": [
+          "Ming-Jen Lin",
+          "Hau-Hung Yang",
+          "Yu-hsuan Shirley Yen"
+        ],
+        "stu": [
+          "HHY"
+        ],
+        "co_links": [],
+        "ssrn": "5656231",
+        "nber": "",
+        "doi": "",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "Linking Taiwan's pet registry to tax records (23M people), dog adoption rises 21% after a birth, and adopting a dog raises the chance of later childbearing by 33% \u2014 pets and children are complements.",
+        "s_zh": "\u4E32\u63A5\u81FA\u7063\u5BF5\u7269\u767B\u8A18\u8207\u7A05\u7C4D\u8CC7\u6599\uFF082300 \u842C\u4EBA\uFF09\uFF0C\u751F\u80B2\u5F8C\u990A\u72D7\u6BD4\u4F8B\u4E0A\u5347 21%\uFF0C\u800C\u990A\u72D7\u4F7F\u65E5\u5F8C\u751F\u80B2\u6A5F\u7387\u63D0\u9AD8 33%\u2014\u2014\u5BF5\u7269\u8207\u5B69\u5B50\u662F\u4E92\u88DC\u800C\u975E\u66FF\u4EE3\u3002",
+        "ab_en": "Are pets substitutes or complements for children? We link Taiwan's national pet-registration records to individual tax data covering 23 million people and exploit the timing of births and pet adoptions. Dog adoption rises 21% in the year after a birth, and adopting a dog raises the probability of a subsequent birth by 33%. The patterns are inconsistent with pets substituting for children and instead point to shared complementarities in the household's demand for caregiving.",
+        "ab_zh": "\u5BF5\u7269\u662F\u5B69\u5B50\u7684\u66FF\u4EE3\u54C1\u9084\u662F\u4E92\u88DC\u54C1\uFF1F\u6211\u5011\u4E32\u63A5\u81FA\u7063\u5168\u570B\u5BF5\u7269\u767B\u8A18\u8207\u500B\u4EBA\u7A05\u7C4D\u8CC7\u6599\uFF08\u6DB5\u84CB 2300 \u842C\u4EBA\uFF09\uFF0C\u5229\u7528\u751F\u80B2\u8207\u990A\u5BF5\u7269\u7684\u6642\u9593\u5DEE\u7570\u3002\u751F\u80B2\u5F8C\u4E00\u5E74\u990A\u72D7\u6BD4\u4F8B\u4E0A\u5347 21%\uFF0C\u990A\u72D7\u4F7F\u65E5\u5F8C\u751F\u80B2\u6A5F\u7387\u63D0\u9AD8 33%\uFF0C\u8207\u66FF\u4EE3\u95DC\u4FC2\u4E0D\u7B26\uFF0C\u800C\u6307\u5411\u5BB6\u5EAD\u7167\u8B77\u9700\u6C42\u7684\u4E92\u88DC\u6027\u3002"
+      },
+      {
+        "id": "careworkers",
+        "st": "rr",
+        "year": 2026,
+        "t_en": "Foreign-Born Care Workers and Their Care Recipients' Health Outcomes",
+        "t_zh": "\u5916\u7C4D\u770B\u8B77\u5DE5\u8207\u53D7\u7167\u8B77\u8005\u7684\u5065\u5EB7\u7D50\u679C",
+        "out_en": "R&R \u00B7 Health Economics",
+        "out_zh": "\u4FEE\u8A02\u91CD\u6295 \u00B7 Health Economics",
+        "ins": [
+          "household",
+          "health"
+        ],
+        "top": [
+          "aging",
+          "health",
+          "labor"
+        ],
+        "pos": {
+          "household": "care",
+          "health": "ltc"
+        },
+        "co": [
+          "Su-Yuan Chan"
+        ],
+        "stu": [],
+        "co_links": [],
+        "ssrn": "4966797",
+        "nber": "",
+        "doi": "",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "Hiring a live-in foreign-born care worker significantly reduces inpatient, outpatient and ER use \u2014 likely because health improves, with fewer falls.",
+        "s_zh": "\u96C7\u7528\u540C\u4F4F\u7684\u5916\u7C4D\u770B\u8B77\u5DE5\u986F\u8457\u964D\u4F4E\u4F4F\u9662\u3001\u9580\u8A3A\u8207\u6025\u8A3A\u4F7F\u7528\u2014\u2014\u53EF\u80FD\u56E0\u5065\u5EB7\u6539\u5584\u4E14\u8DCC\u5012\u6E1B\u5C11\u3002",
+        "ab_en": "",
+        "ab_zh": ""
+      },
+      {
+        "id": "healthchecks",
+        "st": "working",
+        "year": 2026,
+        "t_en": "Selecting the Patients Who Benefit the Most: Evidence from Marginal Patients in Health Checks",
+        "t_zh": "\u7BE9\u9078\u53D7\u76CA\u6700\u5927\u7684\u75C5\u60A3\uFF1A\u4F86\u81EA\u5065\u6AA2\u908A\u969B\u75C5\u60A3\u7684\u8B49\u64DA",
+        "out_en": "Working paper",
+        "out_zh": "\u5DE5\u4F5C\u8AD6\u6587",
+        "ins": [
+          "health"
+        ],
+        "top": [
+          "health",
+          "inequality"
+        ],
+        "pos": {
+          "health": "screening"
+        },
+        "co": [
+          "Lin-Tung Tsai"
+        ],
+        "stu": [
+          "LTT"
+        ],
+        "co_links": [],
+        "ssrn": "4858772",
+        "nber": "",
+        "doi": "",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "Across 6M Taiwanese health checks, a hyperlipidemia diagnosis cuts short-term complications by 10.8%; age is the single best variable to target \u2014 the oldest 20% gain 3.5\u00D7 the benefit.",
+        "s_zh": "\u5728 600 \u842C\u6B21\u5065\u6AA2\u4E2D\uFF0C\u9AD8\u8840\u8102\u8A3A\u65B7\u4F7F\u77ED\u671F\u4F75\u767C\u75C7\u964D\u4F4E 10.8%\uFF1B\u4EE5\u5E74\u9F61\u70BA\u7BE9\u9078\u4F9D\u64DA\u6700\u4F73\u2014\u2014\u6700\u5E74\u9577\u7684 20% \u53D7\u76CA\u9054 3.5 \u500D\u3002",
+        "ab_en": "",
+        "ab_zh": ""
+      },
+      {
+        "id": "careshocks",
+        "st": "working",
+        "year": 2026,
+        "t_en": "Family Trajectories and the Burden of Care in the Aftermath of Old-Age Health Shocks",
+        "t_zh": "\u8001\u5E74\u5065\u5EB7\u885D\u64CA\u5F8C\u7684\u5BB6\u5EAD\u8ECC\u8DE1\u8207\u7167\u8B77\u8CA0\u64D4",
+        "out_en": "Working paper",
+        "out_zh": "\u5DE5\u4F5C\u8AD6\u6587",
+        "ins": [
+          "household",
+          "health"
+        ],
+        "top": [
+          "aging",
+          "family",
+          "health"
+        ],
+        "pos": {
+          "household": "care",
+          "health": "ltc"
+        },
+        "co": [
+          "Maxwell Kellogg",
+          "Kuan-Ju Tseng"
+        ],
+        "stu": [
+          "KJT"
+        ],
+        "co_links": [],
+        "ssrn": "4741990",
+        "nber": "",
+        "doi": "",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "Health shocks to the elderly make large families grow larger, while small families face sharp rises in mortality \u2014 \u201Cdeaths of despair.\u201D Expanding access to live-in caregivers makes that mortality response vanish.",
+        "s_zh": "\u8001\u5E74\u5065\u5EB7\u885D\u64CA\u4F7F\u5927\u5BB6\u5EAD\u66F4\u5927\uFF0C\u5C0F\u5BB6\u5EAD\u5247\u9762\u81E8\u6B7B\u4EA1\u98A8\u96AA\u9AD8\u6F32\u3002\u64F4\u5927\u540C\u4F4F\u770B\u8B77\u7BA1\u9053\u53EF\u4F7F\u9019\u985E\u6B7B\u4EA1\u53CD\u61C9\u6D88\u5931\u3002",
+        "ab_en": "",
+        "ab_zh": ""
+      },
+      {
+        "id": "inherit",
+        "st": "progress",
+        "year": 2026,
+        "t_en": "The Effect of House-Inheriting on Labor Decisions",
+        "t_zh": "\u7E7C\u627F\u623F\u7522\u5C0D\u52DE\u52D5\u6C7A\u7B56\u7684\u5F71\u97FF",
+        "out_en": "In progress",
+        "out_zh": "\u9032\u884C\u4E2D",
+        "ins": [
+          "household",
+          "legal"
+        ],
+        "top": [
+          "aging",
+          "labor",
+          "inequality"
+        ],
+        "pos": {
+          "household": "care",
+          "legal": "reform"
+        },
+        "co": [
+          "Ming-Jen Lin",
+          "Kuan-Ju Tseng"
+        ],
+        "stu": [
+          "KJT",
+          "TCL1"
+        ],
+        "co_links": [],
+        "ssrn": "",
+        "nber": "",
+        "doi": "",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "Comparing people who lost a parent with and without inheriting a house, inheriting a house lowers labor income and the probability of working \u2014 a Carnegie effect that spills over to spouses.",
+        "s_zh": "\u6BD4\u8F03\u5931\u53BB\u96D9\u89AA\u4F46\u662F\u5426\u7E7C\u627F\u623F\u7522\u7684\u4EBA\uFF0C\u7E7C\u627F\u623F\u7522\u964D\u4F4E\u52DE\u52D5\u6240\u5F97\u8207\u5C31\u696D\u6A5F\u7387\u2014\u2014\u4E26\u6EA2\u51FA\u81F3\u914D\u5076\u3002",
+        "ab_en": "",
+        "ab_zh": ""
+      },
+      {
+        "id": "spatialdating",
+        "st": "progress",
+        "year": 2026,
+        "t_en": "Spatial Learning in Online Dating",
+        "t_zh": "\u7DDA\u4E0A\u4EA4\u53CB\u4E2D\u7684\u7A7A\u9593\u5B78\u7FD2",
+        "out_en": "In progress",
+        "out_zh": "\u9032\u884C\u4E2D",
+        "ins": [
+          "firms",
+          "household"
+        ],
+        "top": [
+          "matching"
+        ],
+        "pos": {
+          "firms": "platforms",
+          "household": "dating"
+        },
+        "co": [
+          "Yen-Chi Chen",
+          "Ming-Jen Lin",
+          "Yi Xin"
+        ],
+        "stu": [
+          "YECC",
+          "CL"
+        ],
+        "co_links": [],
+        "ssrn": "",
+        "nber": "",
+        "doi": "",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "How users learn about the dating market as they search across space.",
+        "s_zh": "\u4F7F\u7528\u8005\u5728\u8DE8\u7A7A\u9593\u641C\u5C0B\u6642\uFF0C\u5982\u4F55\u5B78\u7FD2\u8A8D\u8B58\u4EA4\u53CB\u5E02\u5834\u3002",
+        "ab_en": "",
+        "ab_zh": ""
+      },
+      {
+        "id": "motherhood",
+        "st": "progress",
+        "year": 2026,
+        "t_en": "Delays in Motherhood: Differentiating the Effects of Birth and Miscarriage",
+        "t_zh": "\u5EF6\u5F8C\u751F\u80B2\uFF1A\u5340\u5206\u751F\u7522\u8207\u6D41\u7522\u7684\u5F71\u97FF",
+        "out_en": "In progress",
+        "out_zh": "\u9032\u884C\u4E2D",
+        "ins": [
+          "household"
+        ],
+        "top": [
+          "fertility",
+          "family",
+          "health"
+        ],
+        "pos": {
+          "household": "family"
+        },
+        "co": [
+          "Yenfang Chieng",
+          "Hui Ding",
+          "Warn Lekfuangfu"
+        ],
+        "stu": [
+          "YFC"
+        ],
+        "co_links": [],
+        "ssrn": "",
+        "nber": "",
+        "doi": "",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "Separating how births and miscarriages each shape the timing of motherhood and later outcomes.",
+        "s_zh": "\u5206\u96E2\u751F\u7522\u8207\u6D41\u7522\u5404\u81EA\u5982\u4F55\u5F71\u97FF\u751F\u80B2\u6642\u9593\u8207\u65E5\u5F8C\u7D50\u679C\u3002",
+        "ab_en": "",
+        "ab_zh": ""
+      },
+      {
+        "id": "schoolmh",
+        "st": "forthcoming",
+        "year": 2026,
+        "t_en": "School Milestones Impact Child Mental Health in Taiwan",
+        "t_zh": "\u5C31\u5B78\u91CC\u7A0B\u7891\u5C0D\u81FA\u7063\u5152\u7AE5\u5FC3\u7406\u5065\u5EB7\u7684\u5F71\u97FF",
+        "out_en": "Forthcoming \u00B7 The Economic Journal",
+        "out_zh": "\u5373\u5C07\u767C\u8868 \u00B7 The Economic Journal",
+        "ins": [
+          "household",
+          "health"
+        ],
+        "top": [
+          "children",
+          "health"
+        ],
+        "pos": {
+          "household": "child",
+          "health": "patients"
+        },
+        "co": [
+          "Janet Currie",
+          "Hui Ding",
+          "Wei-Lun Lo"
+        ],
+        "stu": [
+          "WLL",
+          "CAL"
+        ],
+        "co_links": [],
+        "ssrn": "4929521",
+        "nber": "32842",
+        "doi": "https://doi.org/10.1093/ej/ueag084",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "School entry raises mental-health prescribing (ADHD and depression); psychiatric medication use falls sharply after high-stakes tests \u2014 effects track when educational stress rises and is relieved.",
+        "s_zh": "\u5165\u5B78\u63D0\u9AD8\u5FC3\u7406\u5065\u5EB7\u7528\u85E5\uFF08\u904E\u52D5\u8207\u6182\u9B31\uFF09\uFF1B\u8003\u8A66\u5F8C\u7528\u85E5\u986F\u8457\u4E0B\u964D\u2014\u2014\u6548\u679C\u96A8\u6559\u80B2\u58D3\u529B\u4E0A\u5347\u8207\u7D13\u89E3\u800C\u8B8A\u3002",
+        "ab_en": "We examine child mental health treatment surrounding three school milestones in Taiwan: Middle school entry, high stakes testing for high school entrance, and college entrance exams. Using age cutoffs for school entry, we compare August-born to September-born children since the August-born reach each milestone one year earlier. Comparing adjacent cohorts of children born in the same month yields similar estimates. We find that entry into middle school increases mental health prescribing of antidepressant, anti-anxiety, and antipsychotic medications. Use of psychiatric medications falls sharply following high-stakes tests. Effects are stronger in counties where parents and children have higher educational aspirations.",
+        "ab_zh": ""
+      },
+      {
+        "id": "childdis",
+        "st": "published",
+        "year": 2026,
+        "t_en": "Impacts of Childhood Disability on Family: Labor, Marriage, Fertility, and Depression",
+        "t_zh": "\u5152\u7AE5\u8EAB\u5FC3\u969C\u7919\u5C0D\u5BB6\u5EAD\u7684\u5F71\u97FF\uFF1A\u52DE\u52D5\u3001\u5A5A\u59FB\u3001\u751F\u80B2\u8207\u6182\u9B31",
+        "out_en": "Journal of Public Economics, 2026",
+        "out_zh": "Journal of Public Economics\uFF0C2026",
+        "ins": [
+          "household"
+        ],
+        "top": [
+          "children",
+          "family",
+          "inequality"
+        ],
+        "pos": {
+          "household": "child"
+        },
+        "co": [
+          "Ming-Jen Lin",
+          "Wei-Lun Lo"
+        ],
+        "stu": [
+          "WLL",
+          "CAL",
+          "LCC"
+        ],
+        "co_links": [],
+        "ssrn": "4088796",
+        "nber": "",
+        "doi": "https://doi.org/10.1016/j.jpubeco.2026.105591",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "A child's cerebral palsy lowers the mother's probability of working by 5.5pp, raises divorce by 2.1pp and depression by 25%, with larger effects for worse-off families.",
+        "s_zh": "\u5B69\u5B50\u7F79\u60A3\u8166\u6027\u9EBB\u75FA\u4F7F\u6BCD\u89AA\u5C31\u696D\u6A5F\u7387\u4E0B\u964D 5.5 \u500B\u767E\u5206\u9EDE\uFF0C\u96E2\u5A5A\u589E\u52A0 2.1 \u500B\u767E\u5206\u9EDE\u3001\u6182\u9B31\u589E\u52A0 25%\uFF0C\u5C0D\u8655\u5883\u8F03\u5DEE\u7684\u5BB6\u5EAD\u5F71\u97FF\u66F4\u5927\u3002",
+        "ab_en": "Childhood disability has profound and far-reaching effects on family members. Using 20 years of administrative records from Taiwan\u2019s National Health Insurance Research Database, we study cerebral palsy (CP), one of the most common causes of childhood disability. Leveraging CP\u2019s congenital nature, its inability to be detected in utero, and its early diagnosis after birth, combined with rich administrative data, we employ an event study approach to examine its impacts on a wide range of parental outcomes, including labor supply, mental health, marital status, and fertility. Our findings show that having a child with CP reduces the mother\u2019s likelihood of employment by 4.4 percentage points (pp), and increases the likelihood of divorce by 4.3 pp. The risk of maternal mental disorders is also increased. Additionally, we observe a significant long-term decline in fertility among affected families.",
+        "ab_zh": ""
+      },
+      {
+        "id": "ipv",
+        "st": "forthcoming",
+        "year": 2026,
+        "t_en": "Breaking Silence: How Intimate Partner Violence and Reporting Shape Later Life Outcomes",
+        "t_zh": "\u6253\u7834\u6C89\u9ED8\uFF1A\u89AA\u5BC6\u95DC\u4FC2\u66B4\u529B\u8207\u901A\u5831\u5982\u4F55\u5F62\u5851\u65E5\u5F8C\u4EBA\u751F",
+        "out_en": "Forthcoming \u00B7 Journal of Labor Economics",
+        "out_zh": "\u5373\u5C07\u767C\u8868 \u00B7 Journal of Labor Economics",
+        "ins": [
+          "legal",
+          "household"
+        ],
+        "top": [
+          "family",
+          "legal"
+        ],
+        "pos": {
+          "household": "family",
+          "legal": "reporting"
+        },
+        "co": [
+          "Harrison Chang",
+          "Shiau-Fang Chao",
+          "Ming-Jen Lin"
+        ],
+        "stu": [],
+        "co_links": [],
+        "ssrn": "4475647",
+        "nber": "",
+        "doi": "https://doi.org/10.1086/742934",
+        "arxiv": "",
+        "show": "true",
+        "media": [
+          [
+            "CNA",
+            "https://www.cna.com.tw/news/ahel/202506240134.aspx"
+          ],
+          [
+            "UDN",
+            "https://udn.com/news/story/7266/8827384"
+          ],
+          [
+            "LTN",
+            "https://news.ltn.com.tw/news/life/paper/1713217"
+          ]
+        ],
+        "s_en": "Separating the violence effect from the reporting effect: divorce rises after a report, women's employment recovers after reporting, and depression visits rise with both violence and reporting.",
+        "s_zh": "\u5206\u96E2\u66B4\u529B\u6548\u61C9\u8207\u901A\u5831\u6548\u61C9\uFF1A\u901A\u5831\u5F8C\u96E2\u5A5A\u4E0A\u5347\uFF0C\u5973\u6027\u5C31\u696D\u5728\u901A\u5831\u5F8C\u56DE\u5347\uFF0C\u800C\u6182\u9B31\u9580\u8A3A\u96A8\u66B4\u529B\u8207\u901A\u5831\u4E0A\u5347\u3002",
+        "ab_en": "We study the impact of Intimate Partner Violence (IPV) on various as-pects of the victims\u2019 lives throughout the course of violence, including theirlabor market performance, marital decisions, fertility decisions, and healthoutcomes. Our data consists of the universe of administratively reportedIPV cases primarily from hospitals, police, and helplines in Taiwan from2012 to 2018. We distinguish the violence effect and the report effect. Weuse later-treated victims as control groups under an event study framework.Among all victims who eventually report IPV to the officials, we find (i)women\u2019s employment rate decreases after the onset of violence, but an in-cremental positive effect follows after reporting, particularly among young and educated women; (ii) the probability of divorce increases for both menand women after the report but not at the violence onset; (iii) reductionin additional childbirth after reporting regardless of the victim\u2019s gender;(iv) rising depression outpatient-visits after violence and reporting amongwomen.",
+        "ab_zh": ""
+      },
+      {
+        "id": "sorting",
+        "st": "published",
+        "year": 2026,
+        "t_en": "Labor Market Sorting in Taiwan",
+        "t_zh": "\u81FA\u7063\u52DE\u52D5\u5E02\u5834\u914D\u5C0D",
+        "out_en": "Taiwan Economic Review, 2026",
+        "out_zh": "\u7D93\u6FDF\u8AD6\u6587\u53E2\u520A\uFF0C2026",
+        "ins": [
+          "firms"
+        ],
+        "top": [
+          "labor",
+          "firms",
+          "inequality"
+        ],
+        "pos": {
+          "firms": "networks"
+        },
+        "co": [
+          "Lin-Tung Tsai",
+          "Hau-Hung Yang"
+        ],
+        "stu": [
+          "LTT",
+          "HHY"
+        ],
+        "co_links": [],
+        "ssrn": "5149991",
+        "nber": "",
+        "doi": "https://doi.org/10.6277/TER.202606_54(2).0003",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "First bias-corrected AKM estimates for Asia: individual effects explain 60% of wage variance, firms 14%, and sorting 13.5% \u2014 sorting nearly doubled over 15 years.",
+        "s_zh": "\u4E9E\u6D32\u9996\u500B\u504F\u8AA4\u4FEE\u6B63\u7684 AKM \u4F30\u8A08\uFF1A\u500B\u4EBA\u6548\u679C\u89E3\u91CB 60% \u85AA\u8CC7\u8B8A\u7570\u3001\u5EE0\u5546 14%\u3001\u914D\u5C0D 13.5%\u2014\u2014\u914D\u5C0D\u6210\u5206\u5341\u4E94\u5E74\u5167\u8FD1\u4E4E\u500D\u589E\u3002",
+        "ab_en": "This study provides the first bias-corrected estimates of labor market sorting in Asia using the Abowd, Kramarz, and Margolis (1999) model on an administrative employer-employee dataset from Taiwan. Findings reveal that the contributions of individual, firm, and sorting components to wage variation align closely with estimates from Europe and the United States: individual effects explain 60% of wage variance, firm effects 14%, and sorting effects 13.5%. Notably, the sorting component has increased from 7.2% to 13.5% over the past 15 years, paralleling trends in similarly developed economies despite structural and industrial differences. A unique aspect of Taiwan has been that, despite increasing sorting, wage inequality remains relatively stable, in contrast to findings in other contexts, such as Card, Heining, and Kline (2013).",
+        "ab_zh": "\u672C\u7814\u7A76\u9996\u6B21\u5229\u7528Abowd, Kramarz, and Margolis\uFF081999\uFF09\u6A21\u578B\uFF0C\u7D50\u5408\u53F0\u7063\u7684\u884C\u653F\u96C7\u4E3B\u2014\u96C7\u54E1\u8CC7\u6599\uFF0C\u63D0\u4F9B\u4E9E\u6D32\u52DE\u52D5\u5E02\u5834\u914D\u5C0D\uFF08sorting\uFF09\u7A0B\u5EA6\u7684\u4F30\u8A08\u3002\u7D50\u679C\u986F\u793A\uFF0C\u500B\u4EBA\u3001\u4F01\u696D\u4EE5\u53CA\u914D\u5C0D\u6548\u679C\u5728\u5DE5\u8CC7\u5DEE\u7570\u7684\u4F54\u6BD4\uFF0C\u8207\u6B50\u6D32\u53CA\u7F8E\u570B\u7684\u4F30\u8A08\u7D50\u679C\u9AD8\u5EA6\u4E00\u81F4\uFF1A\u500B\u4EBA\u6548\u679C\u89E3\u91CB\u4E8660%\u7684\u5DE5\u8CC7\u8B8A\u7570\uFF0C\u4F01\u696D\u6548\u679C\u4F5414%\uFF0C\u800C\u914D\u5C0D\u6548\u679C\u5247\u70BA13.5%\u3002\u914D\u5C0D\u6548\u679C\u5728\u904E\u53BB15\u5E74\u9593\u75317.2%\u4E0A\u5347\u81F313.5%\uFF0C\u8207\u5176\u4ED6\u5DF2\u958B\u767C\u7D93\u6FDF\u9AD4\u7684\u8DA8\u52E2\u76F8\u4F3C\u3002\u53F0\u7063\u7684\u4E00\u500B\u7368\u7279\u73FE\u8C61\u662F\uFF0C\u5118\u7BA1\u914D\u5C0D\u6548\u679C\u4E0A\u5347\uFF0C\u5DE5\u8CC7\u4E0D\u5E73\u7B49\u4ECD\u76F8\u5C0D\u7A69\u5B9A\uFF0C\u9019\u8207Card, Heining, and Kline\uFF082013\uFF09\u7684\u767C\u73FE\u6709\u6240\u5DEE\u7570\u3002"
+      },
+      {
+        "id": "reswage",
+        "st": "published",
+        "year": 2025,
+        "t_en": "Reservation Wages and Workers' Valuation of Job Flexibility: Evidence from a Natural Field Experiment",
+        "t_zh": "\u4FDD\u7559\u5DE5\u8CC7\u8207\u52DE\u5DE5\u5C0D\u5DE5\u4F5C\u5F48\u6027\u7684\u8A55\u50F9\uFF1A\u4F86\u81EA\u81EA\u7136\u7530\u91CE\u5BE6\u9A57\u7684\u8B49\u64DA",
+        "out_en": "Journal of the European Economic Association, 2025",
+        "out_zh": "Journal of the European Economic Association\uFF0C2025",
+        "ins": [
+          "firms"
+        ],
+        "top": [
+          "labor"
+        ],
+        "pos": {
+          "firms": "wages"
+        },
+        "co": [
+          "Claire Ding",
+          "John A. List",
+          "Magne Mogstad"
+        ],
+        "stu": [],
+        "co_links": [],
+        "ssrn": "3686752",
+        "nber": "27807",
+        "doi": "https://doi.org/10.1093/jeea/jvaf022",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "A large Uber field experiment recovers labor-supply elasticities and how much drivers value the ability to customize and adjust their own schedule.",
+        "s_zh": "\u4E00\u9805\u5927\u578B Uber \u7530\u91CE\u5BE6\u9A57\u4F30\u8A08\u52DE\u52D5\u4F9B\u7D66\u5F48\u6027\uFF0C\u4EE5\u53CA\u99D5\u99DB\u8005\u5C0D\u81EA\u8A02\u8207\u8ABF\u6574\u73ED\u8868\u80FD\u529B\u7684\u8A55\u50F9\u3002",
+        "ab_en": "We quantify how labor supply elasticities and reservation wages vary between people and over time, and infer workers\u2019 valuation of flexibility in their choices of work hours. Economists and policymakers are keenly interested in these quantities, especially lately with the growth in jobs that offer flexible work schedules. Our study takes advantage of a large natural field experiment at Uber, the largest ride-sharing company. Combining this experiment with high-frequency panel data on wages and individual work decisions, we estimate a dynamic labor supply model that let us recover reservation wages, labor supply elasticities, and workers\u2019 valuation of flexibility. We also show the biases in reservation wages and labor supply elasticities that arise if one uses observational data on wages or a static labor supply model.",
+        "ab_zh": ""
+      },
+      {
+        "id": "dating",
+        "st": "published",
+        "year": 2023,
+        "t_en": "Reducing Recommendation Inequality via Two-Sided Matching: A Field Experiment of Online Dating",
+        "t_zh": "\u4EE5\u96D9\u908A\u5A92\u5408\u964D\u4F4E\u63A8\u85A6\u4E0D\u5E73\u7B49\uFF1A\u7DDA\u4E0A\u4EA4\u53CB\u7684\u7530\u91CE\u5BE6\u9A57",
+        "out_en": "International Economic Review, 2023",
+        "out_zh": "International Economic Review\uFF0C2023",
+        "ins": [
+          "firms"
+        ],
+        "top": [
+          "matching"
+        ],
+        "pos": {
+          "firms": "platforms"
+        },
+        "co": [
+          "Ming-Jen Lin",
+          "Yu-Wei Hsieh"
+        ],
+        "stu": [],
+        "co_links": [],
+        "ssrn": "3718920",
+        "nber": "",
+        "doi": "https://onlinelibrary.wiley.com/doi/epdf/10.1111/iere.12631",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "A matching-theory recommender beats popularity-based algorithms: it produces more matches, spreads attention more evenly, and makes male users 4\u00D7 more likely to receive a response.",
+        "s_zh": "\u4EE5\u5A92\u5408\u7406\u8AD6\u70BA\u57FA\u790E\u7684\u63A8\u85A6\u7CFB\u7D71\u512A\u65BC\u4EE5\u4EBA\u6C23\u70BA\u672C\u7684\u6F14\u7B97\u6CD5\uFF1A\u914D\u5C0D\u66F4\u591A\u3001\u95DC\u6CE8\u66F4\u5747\uFF0C\u4E26\u4F7F\u7537\u6027\u4F7F\u7528\u8005\u7372\u5F97\u56DE\u8986\u7684\u6A5F\u7387\u63D0\u9AD8 4 \u500D\u3002",
+        "ab_en": "Leading dating platforms usually recommend only a small fraction of users based on users\u2019 popularity andsimilarity, leading to recommendation inequality. We use a stylized matching model from economics to mod-ify existing algorithms to reduce inequality. We evaluate the proposed method through a large-scale \uFB01eld ex-periment on a dating platform. Experiment results suggest that our recommender reduces inequality, improvespredictive accuracy, and leads to substantially more matched couples than other competing algorithms.",
+        "ab_zh": ""
+      },
+      {
+        "id": "twlegalbench",
+        "st": "forthcoming",
+        "year": 2026,
+        "t_en": "TW-LegalBench: Measuring Taiwanese Legal Understanding",
+        "t_zh": "TW-LegalBench: AI \u5C0D\u81FA\u7063\u6CD5\u5F8B\u7406\u89E3",
+        "out_en": "Forthcoming \u00B7 ICAIL '26: Proceedings of the Twenty-First International Conference on Artificial Intelligence and Law",
+        "out_zh": "\u5373\u5C07\u767C\u8868 \u00B7 ICAIL '26: Proceedings of the Twenty-First International Conference on Artificial Intelligence and Law",
+        "ins": [
+          "legal"
+        ],
+        "top": [
+          "legal",
+          "AI"
+        ],
+        "pos": {
+          "legal": "verdicts"
+        },
+        "co": [
+          "Fei-Yueh Chen",
+          "Chun Huang Lin",
+          "Chan Wei Hsu",
+          "Kuan Hsuan Yeh",
+          "Zih-Ching Chen",
+          "Patrick Chung-Chia Huang"
+        ],
+        "stu": [
+          "FYC",
+          "CHL",
+          "KHY"
+        ],
+        "co_links": [],
+        "ssrn": "",
+        "nber": "",
+        "doi": "",
+        "arxiv": "2606.18699",
+        "show": "true",
+        "media": [],
+        "s_en": "A new Taiwanese legal benchmark shows top LLMs can pass the lawyer exam but not judge/prosecutor standards, and still struggle with reliable legal writing and exact statute citation.",
+        "s_zh": "\u6211\u5011\u5EFA\u69CB\u65B0\u7684\u81FA\u7063\u6CD5\u5F8B\u57FA\u6E96\u986F\u793A\uFF0C\u9802\u5C16\u5927\u578B\u8A9E\u8A00\u6A21\u578B\u80FD\u901A\u904E\u5F8B\u5E2B\u8003\u8A66\u9580\u6ABB\uFF0C\u4F46\u4ECD\u672A\u9054\u6CD5\u5B98\u8207\u6AA2\u5BDF\u5B98\u6C34\u6E96\uFF0C\u4E14\u5728\u53EF\u9760\u6CD5\u5F8B\u5BEB\u4F5C\u8207\u7CBE\u78BA\u5F15\u7528\u6CD5\u689D\u4E0A\u4ECD\u6709\u56F0\u96E3\u3002",
+        "ab_en": "",
+        "ab_zh": ""
+      },
+      {
+        "id": "socialasst",
+        "st": "forthcoming",
+        "year": 2026,
+        "t_en": "The Impact of Putative Income Regulations on Social Assistance: A Policy Simulation Study Using a Model Family Approach and Administrative Data",
+        "t_zh": "\u64EC\u5236\u6240\u5F97\u5982\u4F55\u5F71\u97FF\u793E\u6703\u6551\u52A9\uFF1F\u57FA\u65BC\u6A21\u5F0F\u5BB6\u5EAD\u8207\u884C\u653F\u6578\u64DA\u5206\u6790\u7684\u653F\u7B56\u6A21\u64EC\u7814\u7A76",
+        "out_en": "Forthcoming \u00B7 Journal of Social Sciences and Philosophy",
+        "out_zh": "\u5373\u5C07\u767C\u8868 \u00B7 \u4EBA\u6587\u53CA\u793E\u6703\u79D1\u5B78\u96C6\u520A",
+        "ins": [
+          "household"
+        ],
+        "top": [
+          "labor"
+        ],
+        "pos": {
+          "household": "family"
+        },
+        "co": [
+          "Julia Shu-Huah Wang",
+          "Chia-Le Yen",
+          "Wan-Hsuan Chiang",
+          "Pin-Chen Chiang",
+          "Jing Wu",
+          "Chien-Yu Lin",
+          "Pang-Hau Wu",
+          "Jih-Chang Liang",
+          "Fang-Ling Chang",
+          "Yueh-Tzu Wang",
+          "Chia-Wei Shen",
+          "Chu-Kai Cheng",
+          "Xiaoyi Yu"
+        ],
+        "stu": [
+          "CLY"
+        ],
+        "co_links": [],
+        "ssrn": "",
+        "nber": "",
+        "doi": "",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "",
+        "s_zh": "",
+        "ab_en": "",
+        "ab_zh": ""
+      },
+      {
+        "id": "aipsfd",
+        "st": "forthcoming",
+        "year": 2026,
+        "t_en": "Automated Integration of Longitudinal Data: An AI Workflow Applied to the PSFD",
+        "t_zh": "\u8FFD\u8E64\u8CC7\u6599\u7684\u81EA\u52D5\u5316\u6574\u5408\uFF1A\u61C9\u7528\u65BC PSFD \u7684 AI \u5DE5\u4F5C\u6D41\u7A0B",
+        "out_en": "Conditionally accepted \u00B7 Journal of Social Sciences and Philosophy",
+        "out_zh": "\u6709\u689D\u4EF6\u63A5\u53D7 \u00B7 \u4EBA\u6587\u53CA\u793E\u6703\u79D1\u5B78\u96C6\u520A",
+        "ins": [
+          "household"
+        ],
+        "top": [
+          "AI"
+        ],
+        "pos": {
+          "household": "family"
+        },
+        "co": [
+          "Cheng-Yu Lee",
+          "Ming-Jen Lin",
+          "Yi-Ting Lin",
+          "Chia-Nih Liu",
+          "Hung Chieh Tsai",
+          "Ju-Chien Yao"
+        ],
+        "stu": [
+          "CYL",
+          "HCT",
+          "JCY",
+          "CNL",
+          "YTL"
+        ],
+        "co_links": [],
+        "ssrn": "",
+        "nber": "",
+        "doi": "",
+        "arxiv": "",
+        "show": "true",
+        "media": [],
+        "s_en": "",
+        "s_zh": "",
+        "ab_en": "",
+        "ab_zh": ""
+      }
     ],
-
-    featured: [
-      { pid: "catsdogs", num: "+33%", color: "#1F6B4A", fig_en: "event study", fig_zh: "\u4E8B\u4EF6\u7814\u7A76",
-        unit_en: "higher chance of childbearing after a couple adopts a dog",
-        unit_zh: "\u592B\u59BB\u990A\u72D7\u5F8C\uFF0C\u751F\u80B2\u6A5F\u7387\u63D0\u9AD8",
-        topic_en: "Fertility & Family", topic_zh: "\u751F\u80B2\u8207\u5BB6\u5EAD" },
-      { pid: "healthchecks", num: "3.5\u00D7", color: "#C77D34", fig_en: "RD targeting", fig_zh: "\u4E0D\u9023\u7E8C\u8A2D\u8A08",
-        unit_en: "larger health benefit for the oldest patients when age guides screening",
-        unit_zh: "\u4EE5\u5E74\u9F61\u5F15\u5C0E\u7BE9\u6AA2\u6642\uFF0C\u6700\u5E74\u9577\u75C5\u60A3\u7684\u5065\u5EB7\u6548\u76CA",
-        topic_en: "Health & Aging", topic_zh: "\u5065\u5EB7\u8207\u9AD8\u9F61" },
-      { pid: "childdis", num: "\u22125.5pp", color: "#1F6B4A", fig_en: "child penalty", fig_zh: "\u80B2\u5152\u4EE3\u50F9",
-        unit_en: "drop in a mother's probability of working after a child's disability",
-        unit_zh: "\u5B69\u5B50\u8EAB\u5FC3\u969C\u7919\u5F8C\uFF0C\u6BCD\u89AA\u5C31\u696D\u6A5F\u7387\u4E0B\u964D",
-        topic_en: "Family & Inequality", topic_zh: "\u5BB6\u5EAD\u8207\u4E0D\u5E73\u7B49" },
-      { pid: "dating", num: "4\u00D7", color: "#5B6BB5", fig_en: "field experiment", fig_zh: "\u7530\u91CE\u5BE6\u9A57",
-        unit_en: "more likely that male users receive a response under two-sided matching",
-        unit_zh: "\u96D9\u908A\u5A92\u5408\u4E0B\uFF0C\u7537\u6027\u4F7F\u7528\u8005\u7372\u5F97\u56DE\u8986\u7684\u6A5F\u7387",
-        topic_en: "Matching & Markets", topic_zh: "\u914D\u5C0D\u8207\u5E02\u5834" }
+    "featured": [
+      {
+        "pid": "ipv",
+        "num": "4.2",
+        "color": "#1F6B4A",
+        "img": "assets/violence_pooled_labor.png",
+        "fig_en": "event study",
+        "fig_zh": "\u4E8B\u4EF6\u7814\u7A76",
+        "unit_en": "years before women report intimate partner violence after violence onset",
+        "unit_zh": "\u5973\u6027\u5E73\u5747\u5728\u89AA\u5BC6\u95DC\u4FC2\u66B4\u529B\u4E2D\u96B1\u5FCD\u7684\u5E74\u6578",
+        "topic_en": "Family",
+        "topic_zh": "\u5BB6\u5EAD"
+      },
+      {
+        "pid": "schoolmh",
+        "num": "40",
+        "color": "#C77D34",
+        "img": "assets/Fig1_drugpp_dep_per_pop.png",
+        "fig_en": "DiD",
+        "fig_zh": "\u5DEE\u7570\u4E2D\u5DEE\u7570",
+        "unit_en": "percent increase in people with psychiatric prescribing entering middle school",
+        "unit_zh": "\u9032\u5165\u570B\u4E2D\u5F8C\u6297\u6182\u9B31\u85E5\u4F7F\u7528\u6A5F\u7387\u589E\u52A0\u767E\u5206\u6BD4",
+        "topic_en": "Health & Education",
+        "topic_zh": "\u5065\u5EB7\u8207\u6559\u80B2"
+      },
+      {
+        "pid": "twlegalbench",
+        "num": "5",
+        "color": "#1F6B4A",
+        "img": "assets/model_vs_human_dual_lawyers.png",
+        "fig_en": "ai benchmark",
+        "fig_zh": "AI Benchmark",
+        "unit_en": "out of 12 LLM pass Taiwanese bar exam",
+        "unit_zh": "\u5927\u578B\u8A9E\u8A00\u6A21\u578B\u901A\u904E\u5F8B\u5E2B\u8003\u8A66",
+        "topic_en": "AI",
+        "topic_zh": "AI"
+      }
     ],
-
-    /* Sample roster \u2014 replace with your own in the Students tab */
-    students: [
-      { id: "huang", name_en: "Pei-Chi Huang", name_zh: "\u9EC3\u4F69\u742A", year: 2022, role: "PhD advisee",
-        place_en: "On the job market, 2026", place_zh: "2026 \u5C31\u696D\u5E02\u5834",
-        traj_en: ["Masters, NTU \u00B7 2022", "PhD candidate, NTU \u00B7 2025"],
-        traj_zh: ["\u53F0\u5927\u78A9\u58EB \u00B7 2022", "\u53F0\u5927\u535A\u58EB\u5019\u9078\u4EBA \u00B7 2025"], site: true },
-      { id: "lin-c", name_en: "Cheng-Yu Lin", name_zh: "\u6797\u6210\u5B87", year: 2023, role: "RA",
-        place_en: "Pre-doctoral fellow, MIT", place_zh: "MIT \u9810\u535A\u7814\u7A76\u54E1",
-        traj_en: ["RA, NTU \u00B7 2023", "Pre-doc, MIT \u00B7 2024"],
-        traj_zh: ["\u53F0\u5927\u7814\u7A76\u52A9\u7406 \u00B7 2023", "MIT \u9810\u535A \u00B7 2024"], site: true },
-      { id: "lo", name_en: "Wei-Lun Lo", name_zh: "\u7F85\u5049\u502B", year: 2021, role: "PhD advisee",
-        place_en: "PhD, University of Chicago", place_zh: "\u829D\u52A0\u54E5\u5927\u5B78\u535A\u58EB",
-        traj_en: ["RA, NTU \u00B7 2021", "Pre-doc, Chicago \u00B7 2022", "PhD, U Chicago \u00B7 2024"],
-        traj_zh: ["\u53F0\u5927\u7814\u7A76\u52A9\u7406 \u00B7 2021", "\u829D\u52A0\u54E5\u9810\u535A \u00B7 2022", "\u829D\u52A0\u54E5\u535A\u58EB \u00B7 2024"], site: true },
-      { id: "chen-r", name_en: "Ruo-Yu Chen", name_zh: "\u9673\u82E5\u6986", year: 2023, role: "Masters",
-        place_en: "Economist, Central Bank of Taiwan", place_zh: "\u4E2D\u592E\u9280\u884C\u7D93\u6FDF\u5B78\u5BB6",
-        traj_en: ["Masters, NTU \u00B7 2023", "Central Bank \u00B7 2023"],
-        traj_zh: ["\u53F0\u5927\u78A9\u58EB \u00B7 2023", "\u4E2D\u592E\u9280\u884C \u00B7 2023"], site: false },
-      { id: "tsai-u", name_en: "Chia-Hao Tsai", name_zh: "\u8521\u5609\u8C6A", year: 2024, role: "Undergraduate",
-        place_en: "Masters student, NTU Economics", place_zh: "\u53F0\u5927\u7D93\u6FDF\u7CFB\u78A9\u58EB\u751F",
-        traj_en: ["Undergraduate RA, NTU \u00B7 2024"],
-        traj_zh: ["\u53F0\u5927\u5927\u5C08\u7814\u7A76\u52A9\u7406 \u00B7 2024"], site: false }
+    "students": [
+      {
+        "id": "CL",
+        "name_en": "Cian Lin",
+        "name_zh": "\u6797\u828A",
+        "year": 2021,
+        "role": "Undergrad RA",
+        "place_en": "PhD, Norwegian School of Economics",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "PKH",
+        "name_en": "Po-Kang Hsiao",
+        "name_zh": "\u856D\u535A\u92FC",
+        "year": 2021,
+        "role": "Undergrad RA",
+        "place_en": "PhD, University of Wisconsin Madison",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "KJT",
+        "name_en": "Kuan-Ju Tseng",
+        "name_zh": "\u66FE\u51A0\u5112",
+        "year": 2021,
+        "role": "Undergrad RA",
+        "place_en": "Predoc, University of Chicago \u2192 PhD, Princeton University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "WLL",
+        "name_en": "Wei-Lun Lo",
+        "name_zh": "\u7F85\u5049\u502B",
+        "year": 2021,
+        "role": "Fulltime RA",
+        "place_en": "PhD, University of Indiana",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "WQD",
+        "name_en": "Wei-Qing Dai",
+        "name_zh": "\u6234\u7DAD\u6176",
+        "year": 2021,
+        "role": "Master RA",
+        "place_en": "O-Bank",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "HML",
+        "name_en": "Hsien-Ming Liu",
+        "name_zh": "\u5289\u61B2\u9298",
+        "year": 2021,
+        "role": "Master Student",
+        "place_en": "E. Sun Bank",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YECC",
+        "name_en": "Yen-Chi Chen",
+        "name_zh": "\u9673\u5F65\u6DC7",
+        "year": 2021,
+        "role": "Undergrad RA",
+        "place_en": "Predoc, University of Chicago \u2192 PhD, University of Chicago",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CCH",
+        "name_en": "Chi-Chao Hung",
+        "name_zh": "\u6D2A\u555F\u8D85",
+        "year": 2021,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing, Master RA",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CAL",
+        "name_en": "Chen-An Lien",
+        "name_zh": "\u9023\u632F\u5B89",
+        "year": 2021,
+        "role": "Undergrad RA",
+        "place_en": "Predoc, University of Chicago",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "TCH",
+        "name_en": "Ting-Chih Hung",
+        "name_zh": "\u6D2A\u633A\u667A",
+        "year": 2021,
+        "role": "Undergrad RA",
+        "place_en": "Predoc, University of California, Berkeley",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YC",
+        "name_en": "Yitong Chao",
+        "name_zh": "\u8D99\u82E1\u5F64",
+        "year": 2021,
+        "role": "Master RA",
+        "place_en": "PhD, Pennsylvania State University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "LTT",
+        "name_en": "Lin-Tung Tsai",
+        "name_zh": "\u8521\u9716\u6771",
+        "year": 2021,
+        "role": "Master RA",
+        "place_en": "Predoc, Stanford University \u2192 PhD, University of California, Berkeley",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "KJW",
+        "name_en": "Kai-Jyun Wang",
+        "name_zh": "\u738B\u6137\u5747",
+        "year": 2022,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "HHY",
+        "name_en": "Hau-Hung Yang",
+        "name_zh": "\u694A\u660A\u7D18",
+        "year": 2022,
+        "role": "PhD RA",
+        "place_en": "Postdoc, Academia Sinica",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "HCL",
+        "name_en": "Hung-Chun Li",
+        "name_zh": "\u9ECE\u5B8F\u6FEC",
+        "year": 2022,
+        "role": "Undergrad RA",
+        "place_en": "Predoc, Academia Sinica",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CAC",
+        "name_en": "Chao-An Chen",
+        "name_zh": "\u9673\u662D\u5B89",
+        "year": 2022,
+        "role": "Undergrad RA",
+        "place_en": "Undergrad, National Taiwan University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CNL",
+        "name_en": "Chia-Nih Liu",
+        "name_zh": "\u5289\u5BB6\u59AE",
+        "year": 2022,
+        "role": "Undergrad RA",
+        "place_en": "Undergrad, National Taiwan University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "SS",
+        "name_en": "Sean Su",
+        "name_zh": "\u8607\u5F35\u7FD4",
+        "year": 2023,
+        "role": "Undergrad RA",
+        "place_en": "School of Medicine, Taipei Medical University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "TCL1",
+        "name_en": "Ting-Chun Lin",
+        "name_zh": "\u6797\u9F0E\u921E",
+        "year": 2023,
+        "role": "Undergrad RA",
+        "place_en": "Predoc, Northwestern University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "HKH",
+        "name_en": "Hung-Kai Huang",
+        "name_zh": "\u9EC3\u6CD3\u6137",
+        "year": 2023,
+        "role": "Undergrad RA",
+        "place_en": "Master, Columbia University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "PCS",
+        "name_en": "Ping-Chi Shih",
+        "name_zh": "\u53F2\u79C9\u5947",
+        "year": 2023,
+        "role": "Undergrad RA",
+        "place_en": "Master, University of Chicago \u2192 Point72",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CHT",
+        "name_en": "Cheng-Han Tsai",
+        "name_zh": "\u8521\u627F\u7FF0",
+        "year": 2023,
+        "role": "Master RA",
+        "place_en": "PhD, London School of Economics",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "MLT",
+        "name_en": "Ming-Lun Tsai",
+        "name_zh": "\u8521\u9298\u502B",
+        "year": 2023,
+        "role": "Fulltime RA",
+        "place_en": "Master, Boston University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YFC",
+        "name_en": "Yen-Fang Chien",
+        "name_zh": "\u7C21\u8A00\u82B3",
+        "year": 2023,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing, Fulltime RA",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CLY",
+        "name_en": "Chia-Le Yen",
+        "name_zh": "\u984F\u5609\u6A02",
+        "year": 2023,
+        "role": "Undergrad RA",
+        "place_en": "Master, Washington University in St. Louis",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CY",
+        "name_en": "Chung Yang",
+        "name_zh": "\u694A\u4EF2",
+        "year": 2023,
+        "role": "Fulltime RA",
+        "place_en": "Predoc, Stanford University \u2192 PhD, Harvard University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "WZC",
+        "name_en": "Wan-Zheng Chen",
+        "name_zh": "\u9673\u83C0\u931A",
+        "year": 2023,
+        "role": "Master Student",
+        "place_en": "E. Sun Bank \u2192 Taiwan Academy of Banking and Finance",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YTL",
+        "name_en": "Yi-Ting Lin",
+        "name_zh": "\u6797\u5955\u9706",
+        "year": 2023,
+        "role": "Undergrad RA",
+        "place_en": "Undergrad, National Taiwan University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YTS",
+        "name_en": "Yu-Te Shen",
+        "name_zh": "\u6C88\u80B2\u5FB7",
+        "year": 2023,
+        "role": "Undergrad RA",
+        "place_en": "Master, University of Wisconsin\u2013Madison",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "BYH",
+        "name_en": "Bo-Yan Huang",
+        "name_zh": "\u9EC3\u67CF\u8AFA",
+        "year": 2023,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing, Master RA",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "LCC",
+        "name_en": "Liang-Cheng Chen",
+        "name_zh": "\u9673\u4EAE\u4E1E",
+        "year": 2024,
+        "role": "Master Student",
+        "place_en": "Master, University of Washington",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "ZLN",
+        "name_en": "Zi Le Ng",
+        "name_zh": "\u9EC3\u81F3\u78CA",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Master, Bocconi University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "HTC",
+        "name_en": "Hsueh-Tse Cheng",
+        "name_zh": "\u912D\u5B78\u6FA4",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Undergrad, National Taiwan University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CCC",
+        "name_en": "Chiao-Chen Chueh",
+        "name_zh": "\u95D5\u854E\u84C1",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Master, National Taiwan University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "PJH",
+        "name_en": "Ping-Ju Hsieh",
+        "name_zh": "\u8B1D\u79C9\u5112",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Master, Toulouse School of Economics \u2192 PhD, Toulouse School of Economics",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "JTL",
+        "name_en": "Jhen-Tang Lin",
+        "name_zh": "\u6797\u798E\u746D",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "MCC",
+        "name_en": "Mao-Chieh Chin",
+        "name_zh": "\u79E6\u8302\u6770",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing, Master RA",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YECL",
+        "name_en": "Yen-Cheng Liang",
+        "name_zh": "\u6881\u664F\u8AA0",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "FYC",
+        "name_en": "Fei-Yueh Chen",
+        "name_zh": "\u9673\u98DB\u5CB3",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Master, University of Rochester \u2192 APMIC",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YIHC",
+        "name_en": "Yi-Hsi Cheng",
+        "name_zh": "\u912D\u4EE5\u5E0C",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "DBS Bank",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "TLT",
+        "name_en": "Tsung-Lin Tang",
+        "name_zh": "\u6E6F\u5B97\u9716",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CYY",
+        "name_en": "Ching-Yuan Yang",
+        "name_zh": "\u694A\u6674\u5143",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Master, National Taiwan University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "RCW",
+        "name_en": "Rui-Cian Weng",
+        "name_zh": "\u7FC1\u777F\u8B19",
+        "year": 2024,
+        "role": "High School RA",
+        "place_en": "Undergrad, National Central University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "TCL2",
+        "name_en": "Ting-Chun Lin",
+        "name_zh": "\u6797\u9F0E\u921E",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Cathay Financial Holdings",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CHL",
+        "name_en": "Chun Huang Lin",
+        "name_zh": "\u9EC3\u6797\u921E",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Master, University of Mannheim",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YYL",
+        "name_en": "Yin-Yun Li",
+        "name_zh": "\u674E\u80E4\u6600",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing, Master RA",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CYL",
+        "name_en": "Cheng-Yu Lee",
+        "name_zh": "\u674E\u627F\u7950",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "HCT",
+        "name_en": "Hung Chieh Tsai",
+        "name_zh": "\u8521\u5B8F\u6770",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "JCY",
+        "name_en": "Ju-Chien Yao",
+        "name_zh": "\u59DA\u5982\u8B19",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YUHC",
+        "name_en": "Yu-Hsin Chang",
+        "name_zh": "\u5F35\u8A9E\u82AF",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YXL",
+        "name_en": "Yu-Xiang Lan",
+        "name_zh": "\u85CD\u5B87\u7965",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "TCC",
+        "name_en": "Ting-Chen Chang",
+        "name_zh": "\u5F35\u5EAD\u798E",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "PhD, Washington University in St. Louis",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "KHY",
+        "name_en": "Kuan-Hsuan Yeh",
+        "name_zh": "\u8449\u51A0\u8431",
+        "year": 2024,
+        "role": "Undergrad RA",
+        "place_en": "Shopee",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YICC",
+        "name_en": "Yi-Chieh Chou",
+        "name_zh": "\u5468\u4EE5\u5A55",
+        "year": 2025,
+        "role": "Undergrad RA",
+        "place_en": "Master, National Taiwan University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CHP",
+        "name_en": "Chen-Hung Peng",
+        "name_zh": "\u5F6D\u6668\u7D18",
+        "year": 2025,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YT",
+        "name_en": "Yuze Tsai",
+        "name_zh": "\u8521\u4F51\u6FA4",
+        "year": 2025,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YUCL",
+        "name_en": "Yu-Chieh Lee",
+        "name_zh": "\u674E\u7950\u9821",
+        "year": 2025,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YSL",
+        "name_en": "Yi-Syuan Lin",
+        "name_zh": "\u6797\u5B9C\u74BF",
+        "year": 2025,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CCT",
+        "name_en": "Chun-Cheng Ting",
+        "name_zh": "\u4E01\u4FCA\u5448",
+        "year": 2025,
+        "role": "Undergrad RA",
+        "place_en": "Medical School, National Taiwan University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YAC",
+        "name_en": "Yu-An Chen",
+        "name_zh": "\u9673\u90C1\u5B89",
+        "year": 2025,
+        "role": "Master RA",
+        "place_en": "Master in Finance, National Taiwan University",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CWH",
+        "name_en": "Chan-Wei Hsu",
+        "name_zh": "\u8A31\u5C55\u7DAD",
+        "year": 2025,
+        "role": "RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "HYH",
+        "name_en": "Hsuan-Yu Ho",
+        "name_zh": "\u4F55\u5BA3\u8AED",
+        "year": 2025,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "WJL",
+        "name_en": "Wei-Ju Lin",
+        "name_zh": "\u6797\u6690\u5112",
+        "year": 2025,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing, Master RA",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CHH",
+        "name_en": "Cheng-Hsiang Huang",
+        "name_zh": "\u9EC3\u5448\u7965",
+        "year": 2025,
+        "role": "Master RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "JSH",
+        "name_en": "Jiang-Shiang Hu",
+        "name_zh": "\u80E1\u5C07\u76F8",
+        "year": 2026,
+        "role": "PhD RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "TYK",
+        "name_en": "Tzu-Yin Kuo",
+        "name_zh": "\u90ED\u59FF\u541F",
+        "year": 2026,
+        "role": "Master RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "LHL",
+        "name_en": "Li-Hsuan Lo",
+        "name_zh": "\u99F1\u7ACB\u7444",
+        "year": 2026,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "CEC",
+        "name_en": "Chao-En Cheng",
+        "name_zh": "\u912D\u5146\u6069",
+        "year": 2026,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "KHF",
+        "name_en": "Ko-Hsuan Fan",
+        "name_zh": "\u8303\u53EF\u8ED2",
+        "year": 2026,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "JST",
+        "name_en": "Jui-Shen Tsai",
+        "name_zh": "\u8521\u777F\u71CA",
+        "year": 2026,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "SYC",
+        "name_en": "Shu-Yu Chan",
+        "name_zh": "\u8A79\u8212\u5B87",
+        "year": 2026,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "YCS",
+        "name_en": "Yi-Chung Shih",
+        "name_zh": "\u65BD\u5B9C\u4E2D",
+        "year": 2026,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      },
+      {
+        "id": "TZC",
+        "name_en": "Tzu-Chi Chuang",
+        "name_zh": "\u838A\u5B50\u671F",
+        "year": 2026,
+        "role": "Undergrad RA",
+        "place_en": "Ongoing",
+        "place_zh": "",
+        "traj_en": [],
+        "traj_zh": [],
+        "show": "true",
+        "site": false
+      }
     ],
-
-    /* Sample courses \u2014 replace with your own in the Teaching tab */
-    teaching: [
-      { code: "ECON 5001", term: "2024\u2013", level: "Graduate",
-        t_en: "Labor Economics", t_zh: "\u52DE\u52D5\u7D93\u6FDF\u5B78",
-        role_en: "Instructor", role_zh: "\u6388\u8AB2\u6559\u5E2B",
-        n_en: "PhD-level field course on labor supply, family, and applied microeconomics.",
-        n_zh: "\u535A\u58EB\u7D1A\u9818\u57DF\u8AB2\uFF0C\u6DB5\u84CB\u52DE\u52D5\u4F9B\u7D66\u3001\u5BB6\u5EAD\u8207\u61C9\u7528\u5FAE\u89C0\u7D93\u6FDF\u5B78\u3002", syllabus: "" },
-      { code: "ECON 3010", term: "2023\u2013", level: "Undergraduate",
-        t_en: "Applied Econometrics & Causal Inference", t_zh: "\u61C9\u7528\u8A08\u91CF\u8207\u56E0\u679C\u63A8\u8AD6",
-        role_en: "Instructor", role_zh: "\u6388\u8AB2\u6559\u5E2B",
-        n_en: "Research designs for causal questions with real administrative data.",
-        n_zh: "\u4EE5\u771F\u5BE6\u884C\u653F\u8CC7\u6599\u6559\u6388\u56E0\u679C\u554F\u984C\u7684\u7814\u7A76\u8A2D\u8A08\u3002", syllabus: "" },
-      { code: "ECON 2001", term: "2023\u2013", level: "Undergraduate",
-        t_en: "Principles of Microeconomics", t_zh: "\u5FAE\u89C0\u7D93\u6FDF\u5B78\u539F\u7406",
-        role_en: "Instructor", role_zh: "\u6388\u8AB2\u6559\u5E2B",
-        n_en: "Introductory microeconomics for first-year students.",
-        n_zh: "\u9762\u5411\u5927\u4E00\u5B78\u751F\u7684\u5FAE\u89C0\u7D93\u6FDF\u5B78\u5C0E\u8AD6\u3002", syllabus: "" },
-      { code: "ECON 7020", term: "2024", level: "PhD seminar",
-        t_en: "Topics in Family & Health Economics", t_zh: "\u5BB6\u5EAD\u8207\u5065\u5EB7\u7D93\u6FDF\u5B78\u5C08\u984C",
-        role_en: "Instructor", role_zh: "\u6388\u8AB2\u6559\u5E2B",
-        n_en: "Reading seminar on frontier work in family and health economics.",
-        n_zh: "\u5BB6\u5EAD\u8207\u5065\u5EB7\u7D93\u6FDF\u5B78\u524D\u6CBF\u6587\u737B\u7684\u95B1\u8B80\u8AB2\u7A0B\u3002", syllabus: "" }
+    "teaching": [
+      {
+        "code": "ECON 5001",
+        "term": "2024\u2013",
+        "level": "Graduate",
+        "t_en": "Labor Economics",
+        "t_zh": "\u52DE\u52D5\u7D93\u6FDF\u5B78",
+        "role_en": "Instructor",
+        "role_zh": "\u6388\u8AB2\u6559\u5E2B",
+        "n_en": "PhD-level field course on labor supply, family, and applied microeconomics.",
+        "n_zh": "\u535A\u58EB\u7D1A\u9818\u57DF\u8AB2\uFF0C\u6DB5\u84CB\u52DE\u52D5\u4F9B\u7D66\u3001\u5BB6\u5EAD\u8207\u61C9\u7528\u5FAE\u89C0\u7D93\u6FDF\u5B78\u3002",
+        "syllabus": ""
+      },
+      {
+        "code": "ECON 3010",
+        "term": "2023\u2013",
+        "level": "Undergraduate",
+        "t_en": "Applied Econometrics & Causal Inference",
+        "t_zh": "\u61C9\u7528\u8A08\u91CF\u8207\u56E0\u679C\u63A8\u8AD6",
+        "role_en": "Instructor",
+        "role_zh": "\u6388\u8AB2\u6559\u5E2B",
+        "n_en": "Research designs for causal questions with real administrative data.",
+        "n_zh": "\u4EE5\u771F\u5BE6\u884C\u653F\u8CC7\u6599\u6559\u6388\u56E0\u679C\u554F\u984C\u7684\u7814\u7A76\u8A2D\u8A08\u3002",
+        "syllabus": ""
+      },
+      {
+        "code": "ECON 2001",
+        "term": "2023\u2013",
+        "level": "Undergraduate",
+        "t_en": "Principles of Microeconomics",
+        "t_zh": "\u5FAE\u89C0\u7D93\u6FDF\u5B78\u539F\u7406",
+        "role_en": "Instructor",
+        "role_zh": "\u6388\u8AB2\u6559\u5E2B",
+        "n_en": "Introductory microeconomics for first-year students.",
+        "n_zh": "\u9762\u5411\u5927\u4E00\u5B78\u751F\u7684\u5FAE\u89C0\u7D93\u6FDF\u5B78\u5C0E\u8AD6\u3002",
+        "syllabus": ""
+      },
+      {
+        "code": "ECON 7020",
+        "term": "2024",
+        "level": "PhD seminar",
+        "t_en": "Topics in Family & Health Economics",
+        "t_zh": "\u5BB6\u5EAD\u8207\u5065\u5EB7\u7D93\u6FDF\u5B78\u5C08\u984C",
+        "role_en": "Instructor",
+        "role_zh": "\u6388\u8AB2\u6559\u5E2B",
+        "n_en": "Reading seminar on frontier work in family and health economics.",
+        "n_zh": "\u5BB6\u5EAD\u8207\u5065\u5EB7\u7D93\u6FDF\u5B78\u524D\u6CBF\u6587\u737B\u7684\u95B1\u8B80\u8AB2\u7A0B\u3002",
+        "syllabus": ""
+      }
     ],
-
-    cv: {
-      sections: [
-        { t_en: "Appointments", t_zh: "\u5DE5\u4F5C\u7D93\u6B77", items: [
-          { year: "2023\u2013", p_en: "Associate Professor of Economics", p_zh: "\u7D93\u6FDF\u5B78\u7CFB\u526F\u6559\u6388", s_en: "National Taiwan University", s_zh: "\u570B\u7ACB\u81FA\u7063\u5927\u5B78" },
-          { year: "2023\u2013", p_en: "Director, Behavioral & Data Science Research Center", p_zh: "\u884C\u70BA\u8207\u8CC7\u6599\u79D1\u5B78\u7814\u7A76\u4E2D\u5FC3\u4E3B\u4EFB", s_en: "National Taiwan University", s_zh: "\u570B\u7ACB\u81FA\u7063\u5927\u5B78" }
-        ]},
-        { t_en: "Education", t_zh: "\u5B78\u6B77", items: [
-          { year: "\u2014", p_en: "Ph.D. in Economics", p_zh: "\u7D93\u6FDF\u5B78\u535A\u58EB", s_en: "[University \u2014 edit in CV tab]", s_zh: "\u3014\u5B78\u6821 \u2014 \u8ACB\u65BC CV \u5206\u9801\u7DE8\u8F2F\u3015" }
-        ]},
-        { t_en: "Fields", t_zh: "\u7814\u7A76\u9818\u57DF", items: [
-          { year: "", p_en: "Labor Economics \u00B7 Family Economics \u00B7 Health Economics \u00B7 Market Design", p_zh: "\u52DE\u52D5\u7D93\u6FDF\u5B78 \u00B7 \u5BB6\u5EAD\u7D93\u6FDF\u5B78 \u00B7 \u5065\u5EB7\u7D93\u6FDF\u5B78 \u00B7 \u5E02\u5834\u8A2D\u8A08", s_en: "", s_zh: "" }
-        ]},
-        { t_en: "Honors & Grants", t_zh: "\u69AE\u8B7D\u8207\u88DC\u52A9", items: [
-          { year: "\u2014", p_en: "[Add grants and honors in the CV tab]", p_zh: "\u3014\u8ACB\u65BC CV \u5206\u9801\u65B0\u589E\u88DC\u52A9\u8207\u69AE\u8B7D\u3015", s_en: "", s_zh: "" }
-        ]}
+    "cv": {
+      "sections": [
+        {
+          "t_en": "Appointments",
+          "t_zh": "\u5DE5\u4F5C\u7D93\u6B77",
+          "items": [
+            {
+              "year": "2026\u2013",
+              "p_en": "Associate Professor of Economics",
+              "p_zh": "\u7D93\u6FDF\u5B78\u7CFB\u526F\u6559\u6388",
+              "s_en": "National Taiwan University",
+              "s_zh": "\u570B\u7ACB\u81FA\u7063\u5927\u5B78"
+            },
+            {
+              "year": "2023\u2013",
+              "p_en": "Director, Behavioral & Data Science Research Center",
+              "p_zh": "\u884C\u70BA\u8207\u8CC7\u6599\u79D1\u5B78\u7814\u7A76\u4E2D\u5FC3\u4E3B\u4EFB",
+              "s_en": "National Taiwan University",
+              "s_zh": "\u570B\u7ACB\u81FA\u7063\u5927\u5B78"
+            }
+          ]
+        },
+        {
+          "t_en": "Education",
+          "t_zh": "\u5B78\u6B77",
+          "items": [
+            {
+              "year": "\u2014",
+              "p_en": "Ph.D. in Economics",
+              "p_zh": "\u7D93\u6FDF\u5B78\u535A\u58EB",
+              "s_en": "[University \u2014 edit in CV tab]",
+              "s_zh": "\u3014\u5B78\u6821 \u2014 \u8ACB\u65BC CV \u5206\u9801\u7DE8\u8F2F\u3015"
+            }
+          ]
+        },
+        {
+          "t_en": "Fields",
+          "t_zh": "\u7814\u7A76\u9818\u57DF",
+          "items": [
+            {
+              "year": "",
+              "p_en": "Labor Economics \u00B7 Family Economics \u00B7 Health Economics \u00B7 Market Design",
+              "p_zh": "\u52DE\u52D5\u7D93\u6FDF\u5B78 \u00B7 \u5BB6\u5EAD\u7D93\u6FDF\u5B78 \u00B7 \u5065\u5EB7\u7D93\u6FDF\u5B78 \u00B7 \u5E02\u5834\u8A2D\u8A08",
+              "s_en": "",
+              "s_zh": ""
+            }
+          ]
+        },
+        {
+          "t_en": "Honors & Grants",
+          "t_zh": "\u69AE\u8B7D\u8207\u88DC\u52A9",
+          "items": [
+            {
+              "year": "\u2014",
+              "p_en": "[Add grants and honors in the CV tab]",
+              "p_zh": "\u3014\u8ACB\u65BC CV \u5206\u9801\u65B0\u589E\u88DC\u52A9\u8207\u69AE\u8B7D\u3015",
+              "s_en": "",
+              "s_zh": ""
+            }
+          ]
+        }
       ]
     }
   };
@@ -392,13 +2001,15 @@
       return url ? '<a href="' + esc(url) + '" target="_blank" style="color:' + GREEN + '; text-decoration:underline; text-underline-offset:2px;">' + esc(name) + '</a>' : esc(name);
     }).join(", ");
   }
+  /* data-track attrs are read by the GA click handler in index.html */
+  function trk(kind, pid) { return ' data-track="' + kind + '"' + (pid ? ' data-pid="' + esc(pid) + '"' : ""); }
   function links(p, lang) {
     var out = [];
-    if (p.doi) out.push('<a href="' + p.doi + '" target="_blank" style="color:' + GREEN + ';">' + (lang === "zh" ? "\u671F\u520A" : "Journal") + ' \u2197</a>');
-    if (p.nber) out.push('<a href="https://www.nber.org/papers/w' + p.nber + '" target="_blank" style="color:' + GREEN + ';">NBER \u2197</a>');
-    if (p.arxiv) out.push('<a href="https://arxiv.org/abs/' + p.arxiv + '" target="_blank" style="color:' + GREEN + ';">arXiv \u2197</a>');
-    if (p.ssrn) out.push('<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=' + p.ssrn + '" target="_blank" style="color:' + GREEN + ';">SSRN \u2197</a>');
-    if (p.media && p.media.length) out.push('<span style="color:' + MUTE + ';">' + (lang === "zh" ? "\u5A92\u9AD4\uFF1A" : "Media: ") + p.media.map(function (m) { return '<a href="' + m[1] + '" target="_blank" style="color:' + MUTE + '; text-decoration:underline;">' + m[0] + '</a>'; }).join(" \u00B7 ") + '</span>');
+    if (p.doi) out.push('<a href="' + p.doi + '" target="_blank"' + trk("journal", p.id) + ' style="color:' + GREEN + ';">' + (lang === "zh" ? "\u671F\u520A" : "Journal") + ' \u2197</a>');
+    if (p.nber) out.push('<a href="https://www.nber.org/papers/w' + p.nber + '" target="_blank"' + trk("nber", p.id) + ' style="color:' + GREEN + ';">NBER \u2197</a>');
+    if (p.arxiv) out.push('<a href="https://arxiv.org/abs/' + p.arxiv + '" target="_blank"' + trk("arxiv", p.id) + ' style="color:' + GREEN + ';">arXiv \u2197</a>');
+    if (p.ssrn) out.push('<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=' + p.ssrn + '" target="_blank"' + trk("ssrn", p.id) + ' style="color:' + GREEN + ';">SSRN \u2197</a>');
+    if (p.media && p.media.length) out.push('<span style="color:' + MUTE + ';">' + (lang === "zh" ? "\u5A92\u9AD4\uFF1A" : "Media: ") + p.media.map(function (m) { return '<a href="' + m[1] + '" target="_blank"' + trk("media:" + m[0], p.id) + ' style="color:' + MUTE + '; text-decoration:underline;">' + m[0] + '</a>'; }).join(" \u00B7 ") + '</span>');
     return out;
   }
 
@@ -412,7 +2023,7 @@
     var navItems = items.map(function (it) {
       var external = it[2];
       var on = !external && ((route === it[0]) || (route === "home" && it[0] === "home"));
-      return '<a href="' + it[1] + '"' + (external ? ' target="_blank"' : ' data-nav') + ' style="font-family:' + GR + '; font-size:13.5px; color:' + (on ? "#F3F1EC" : "#bfc0b6") + '; border-bottom:1.5px solid ' + (on ? "#F3F1EC" : "transparent") + '; padding-bottom:3px; transition:color .15s;">' + ui("nav", it[0], lang) + (external ? ' \u2197' : "") + '</a>';
+      return '<a href="' + it[1] + '"' + (external ? ' target="_blank"' + trk(it[0]) : ' data-nav') + ' style="font-family:' + GR + '; font-size:13.5px; color:' + (on ? "#F3F1EC" : "#bfc0b6") + '; border-bottom:1.5px solid ' + (on ? "#F3F1EC" : "transparent") + '; padding-bottom:3px; transition:color .15s;">' + ui("nav", it[0], lang) + (external ? ' \u2197' : "") + '</a>';
     }).join("");
     var toggle = '<span style="display:inline-flex; border:1px solid rgba(243,241,236,.3); border-radius:20px; overflow:hidden; font-size:12px; margin-left:6px;">'
       + '<span data-lang="en" style="cursor:pointer; padding:4px 11px; font-family:' + GR + '; ' + (lang === "en" ? "background:#F3F1EC; color:#1E1F1A;" : "color:#bfc0b6;") + '">EN</span>'
@@ -428,24 +2039,24 @@
       + '<div><div style="font-family:' + GR + '; font-size:18px; font-weight:600; color:#F3F1EC;">' + esc(L(s, "name", lang)) + ' \u9673\u51A0\u9298</div>'
       + '<div style="font-size:14px; color:#9a9c93; margin-top:6px; max-width:380px; line-height:1.5;">' + esc(L(s, "dept", lang)) + '</div></div>'
       + '<div style="display:flex; flex-direction:column; gap:7px; font-family:' + GR + '; font-size:13.5px;">'
-      + '<a href="mailto:' + s.email + '" style="color:#cfd0c7;">' + s.email + '</a>'
-      + '<a href="' + s.scholar + '" target="_blank" style="color:#cfd0c7;">Google Scholar \u2197</a>'
-      + '<a href="' + s.orcid + '" target="_blank" style="color:#cfd0c7;">ORCID \u2197</a>'
-      + '<a href="' + s.cv_url + '" target="_blank" style="color:#cfd0c7;">' + (lang === "zh" ? "\u4E0B\u8F09\u5C65\u6B77" : "Download CV") + ' \u2197</a>'
+      + '<a href="mailto:' + s.email + '"' + trk("email") + ' style="color:#cfd0c7;">' + s.email + '</a>'
+      + '<a href="' + s.scholar + '" target="_blank"' + trk("scholar") + ' style="color:#cfd0c7;">Google Scholar \u2197</a>'
+      + '<a href="' + s.orcid + '" target="_blank"' + trk("orcid") + ' style="color:#cfd0c7;">ORCID \u2197</a>'
+      + '<a href="' + s.cv_url + '" target="_blank"' + trk("cv") + ' style="color:#cfd0c7;">' + (lang === "zh" ? "\u4E0B\u8F09\u5C65\u6B77" : "Download CV") + ' \u2197</a>'
       + '</div></div>'
       + '<div style="font-family:' + MONO + '; font-size:11px; color:#6f716a; margin-top:30px;">\u00A9 ' + new Date().getFullYear() + ' ' + esc(L(s, "name", lang)) + ' \u00B7 National Taiwan University</div></div>';
   }
 
   function pillLinks(lang) {
     var s = D.settings;
-    function pill(txt, href, solid) {
-      return '<a href="' + href + '" target="_blank" style="font-family:' + GR + '; font-size:13px; padding:9px 16px; border-radius:24px; ' + (solid ? 'background:' + GREEN + '; color:#fff;' : 'border:1px solid rgba(30,31,26,.25); color:#1E1F1A;') + '">' + txt + '</a>';
+    function pill(txt, href, solid, kind) {
+      return '<a href="' + href + '" target="_blank"' + trk(kind) + ' style="font-family:' + GR + '; font-size:13px; padding:9px 16px; border-radius:24px; ' + (solid ? 'background:' + GREEN + '; color:#fff;' : 'border:1px solid rgba(30,31,26,.25); color:#1E1F1A;') + '">' + txt + '</a>';
     }
     return '<div style="display:flex; gap:10px; flex-wrap:wrap;">'
-      + pill("Google Scholar", s.scholar, true)
-      + pill("ORCID", s.orcid, false)
-      + pill((lang === "zh" ? "\u5C65\u6B77 CV" : "CV") + " \u2197", s.cv_url, false)
-      + pill((lang === "zh" ? "\u4F86\u4FE1" : "Email"), "mailto:" + s.email, false) + '</div>';
+      + pill("Google Scholar", s.scholar, true, "scholar")
+      + pill("ORCID", s.orcid, false, "orcid")
+      + pill((lang === "zh" ? "\u5C65\u6B77 CV" : "CV") + " \u2197", s.cv_url, false, "cv")
+      + pill((lang === "zh" ? "\u4F86\u4FE1" : "Email"), "mailto:" + s.email, false, "email") + '</div>';
   }
 
   /* ====================  HOME  ==================== */
@@ -761,7 +2372,7 @@
       + '<div style="padding:48px var(--px) 8px; display:grid; grid-template-columns:1fr auto; gap:30px; align-items:end;">'
       + '<div><h1 style="font-family:' + GR + '; font-size:46px; font-weight:600; letter-spacing:-.02em; margin:0 0 10px;">' + (lang === "zh" ? "\u5C65\u6B77" : "Curriculum Vitae") + '</h1>'
       + '<p style="font-size:17px; color:' + MUTE + '; margin:0;">' + esc(L(sgs, "name", lang)) + ' \u00B7 ' + esc(L(sgs, "dept", lang)) + '</p></div>'
-      + '<a href="' + sgs.cv_url + '" target="_blank" style="font-family:' + GR + '; font-size:14px; font-weight:600; background:' + GREEN + '; color:#fff; padding:12px 22px; border-radius:24px; white-space:nowrap;">' + (lang === "zh" ? "\u4E0B\u8F09\u5B8C\u6574 PDF" : "Download full PDF") + ' \u2193</a></div>'
+      + '<a href="' + sgs.cv_url + '" target="_blank"' + trk("cv") + ' style="font-family:' + GR + '; font-size:14px; font-weight:600; background:' + GREEN + '; color:#fff; padding:12px 22px; border-radius:24px; white-space:nowrap;">' + (lang === "zh" ? "\u4E0B\u8F09\u5B8C\u6574 PDF" : "Download full PDF") + ' \u2193</a></div>'
       + '<div style="padding:36px var(--px) 50px; display:grid; grid-template-columns:1fr 1.3fr; gap:50px; align-items:start;">'
       + '<div>' + sections + '</div>'
       + '<div><h2 style="font-family:' + GR + '; font-size:13px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:' + GREEN + '; margin:0 0 4px;">' + (lang === "zh" ? "\u767C\u8868\u8207\u5373\u5C07\u767C\u8868" : "Publications & forthcoming") + '</h2>' + pubRows + '</div></div>';
@@ -951,6 +2562,7 @@
     load: load,
     setData: setData,
     settings: function () { return D.settings; },
+    paper: paper,
     navHTML: navHTML,
     footerHTML: footerHTML,
     pageHTML: pageHTML,
